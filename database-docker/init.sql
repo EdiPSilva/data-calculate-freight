@@ -1,0 +1,1 @@
+CREATE DATABASE data_calculate_freight;
