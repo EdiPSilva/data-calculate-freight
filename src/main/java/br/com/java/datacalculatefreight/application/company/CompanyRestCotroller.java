@@ -1,4 +1,4 @@
-package br.com.java.datacalculatefreight.company;
+package br.com.java.datacalculatefreight.application.company;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
