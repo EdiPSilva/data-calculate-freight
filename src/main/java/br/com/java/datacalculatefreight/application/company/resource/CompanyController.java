@@ -3,6 +3,7 @@ package br.com.java.datacalculatefreight.application.company.resource;
 import br.com.java.datacalculatefreight.application.company.CompanyService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,11 @@ public class CompanyController {
 
     @ApiOperation("Cadastro de empresa")
     @PostMapping(value = "/v1/")
-    public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
-        final var companyResponse = companyService.create(companyRequest);
+    public ResponseEntity<CompanyResponse> create(@RequestBody @Valid CompanyRequest companyRequest) {
+        /*final var companyResponse = companyService.create(companyRequest);
         final var url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(companyResponse.getId()).toUri();
-        return ResponseEntity.created(url).body(companyResponse);
+        return ResponseEntity.created(url).body(companyResponse);*/
+        final var companyResponse = companyService.create(companyRequest);
+        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
     }
 }

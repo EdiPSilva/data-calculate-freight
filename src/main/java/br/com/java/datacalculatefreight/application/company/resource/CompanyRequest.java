@@ -3,19 +3,19 @@ package br.com.java.datacalculatefreight.application.company.resource;
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
-import lombok.Data;
-
+import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
-@Data
+import static br.com.java.datacalculatefreight.utils.MessageCode.NAME_NOT_BLANK;
+
+@Getter
 @Builder
 public class CompanyRequest {
 
-    @NotBlank
-    @Size(max = 125, message = "Erro")
+    @NotBlank(message = "{" + NAME_NOT_BLANK + "}")
+    @Size(max = 125, message = "{" + NAME_NOT_BLANK + "}")
     @ApiModelProperty(notes = "Nome da empresa", example = "JP Comercio ME", required = true)
     private String name;
 
