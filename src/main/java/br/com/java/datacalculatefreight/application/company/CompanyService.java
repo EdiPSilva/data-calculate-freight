@@ -3,6 +3,7 @@ package br.com.java.datacalculatefreight.application.company;
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyRepository;
 import br.com.java.datacalculatefreight.application.company.resource.CompanyRequest;
 import br.com.java.datacalculatefreight.application.company.resource.CompanyResponse;
+import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +21,15 @@ public class CompanyService {
     CompanyRepository companyRepository;
 
     public CompanyResponse getById(Long id) {
-        if (1 == 1) {
-            throw new CustomException(messageConfiguration.getMessage());
-        }
-        final var companyEntity = companyRepository.findById(id).orElse(null);
+        validateId(id);
+        final var companyEntity = companyRepository.findById(id).orElseThrow(() -> new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND)));
         return CompanyResponse.from(companyEntity);
+    }
+
+    private void validateId(Long id) {
+        if (id <= 0) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_ID));
+        }
     }
 
     public CompanyResponse getByCnpj(String cnpj) {

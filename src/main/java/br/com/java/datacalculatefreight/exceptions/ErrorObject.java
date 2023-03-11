@@ -1,11 +1,12 @@
 package br.com.java.datacalculatefreight.exceptions;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorObject {
 
     private final String message;

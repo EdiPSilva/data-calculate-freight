@@ -20,25 +20,22 @@ public class CompanyController {
 
     @ApiOperation("Buscar empresa por Id")
     @GetMapping(value = "/v1/{id}")
-    public ResponseEntity<CompanyResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<CompanyResponse> getById(@Valid @PathVariable("id") Long id) {
         final var companyResponse = companyService.getById(id);
         return ResponseEntity.ok(companyResponse);
     }
 
     @ApiOperation("Buscar empresa por CNPJ")
     @GetMapping(value = "/v1/document/{CNPJ}")
-    public ResponseEntity<CompanyResponse> getByCnpj(@PathVariable("CNPJ") String cnpj) {
+    public ResponseEntity<CompanyResponse> getByCnpj(@Valid @PathVariable("CNPJ") String cnpj) {
         final var companyResponse = companyService.getByCnpj(cnpj);
         return ResponseEntity.ok(companyResponse);
     }
 
     @ApiOperation("Cadastro de empresa")
     @PostMapping(value = "/v1/")
-    public ResponseEntity<CompanyResponse> create(@RequestBody @Valid CompanyRequest companyRequest) {
+    public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
         final var companyResponse = companyService.create(companyRequest);
-        final var url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(companyResponse.getId()).toUri();
-        return ResponseEntity.created(url).body(companyResponse);
-        /*final var companyResponse = companyService.create(companyRequest);
-        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);*/
+        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
     }
 }

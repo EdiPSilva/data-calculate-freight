@@ -17,13 +17,13 @@ public class ResponseControllerException {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponse> handleCustomExceptions(RuntimeException runtimeException) {
-        String mensagem = runtimeException.getMessage();//TODO - adequar uso da mensagem no objeto ErrorObject
+        final String mensagem = runtimeException.getMessage();
 
         return new ResponseEntity<>(ErrorResponse.builder()
                 .message(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_REQUEST_DEFAULT_MESSAGE))
                 .code(HttpStatus.BAD_REQUEST.value())
                 .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .errors(Arrays.asList())
+                .errors(Arrays.asList(ErrorObject.builder().message(mensagem).build()))
                 .build(),
                 HttpStatus.BAD_REQUEST);
     }

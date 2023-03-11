@@ -3,7 +3,8 @@ package br.com.java.datacalculatefreight.configuration;
 public enum MessageCodeEnum {
 
     INVALID_REQUEST_DEFAULT_MESSAGE("invalid.request.default.message"),
-    NAME_NOT_BLANK("name.not.blank");
+    INVALID_ID("invalid.id"),
+    REGISTER_NOT_FOUND("register.not.found");
 
     private String value;
 
