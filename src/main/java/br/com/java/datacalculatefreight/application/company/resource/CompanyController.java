@@ -2,6 +2,7 @@ package br.com.java.datacalculatefreight.application.company.resource;
 
 import br.com.java.datacalculatefreight.application.company.CompanyService;
 import br.com.java.datacalculatefreight.utils.DefaultLog;
+import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CompanyController {
 
     private static final String API_V1 = "/company/v1/";
 
-    @ApiOperation("Buscar empresa por Id")
+    @ApiOperation("Empresa por Id")
     @GetMapping(value = "/v1/{id}")
     public ResponseEntity<CompanyResponse> getById(@Valid @PathVariable("id") Long id) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1);
@@ -31,7 +32,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyResponse);
     }
 
-    @ApiOperation("Buscar empresa por CNPJ")
+    @ApiOperation("Empresa por CNPJ")
     @GetMapping(value = "/v1/document/{CNPJ}")
     public ResponseEntity<CompanyResponse> getByDocument(@Valid @PathVariable("CNPJ") String document) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1 + "/document/");
@@ -39,7 +40,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyResponse);
     }
 
-    @ApiOperation("Cadastro de empresa")
+    @ApiOperation("Cadastro empresa")
     @PostMapping(value = "/v1/")
     public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.POST, API_V1);
@@ -47,11 +48,17 @@ public class CompanyController {
         return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
     }
 
-    @ApiOperation("Atualiza uma empresa")
+    @ApiOperation("Atualiza empresa")
     @PutMapping(value = "/v1/{id}")
     public ResponseEntity<CompanyResponse> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody CompanyRequest companyRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.PUT, API_V1);
         final var companyResponse = companyService.update(id, companyRequest);
         return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
+    }
+
+    @ApiOperation("Remove empresa")
+    @DeleteMapping(value = "/v1/{id}")
+    public ResponseEntity<DefaultResponse> delete(@Valid @PathVariable("id") Long id) {
+        return new ResponseEntity<>(companyService.delete(id), HttpStatus.ACCEPTED);
     }
 }

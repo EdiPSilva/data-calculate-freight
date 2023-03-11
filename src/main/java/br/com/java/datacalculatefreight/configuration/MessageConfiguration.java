@@ -18,7 +18,7 @@ public class MessageConfiguration {
         return environment.getProperty(messageCodeEnum.getValue());
     }
 
-    public String getMessageByCode(MessageCodeEnum messageCodeEnum, String... value) {
+    public String getMessageByCode(MessageCodeEnum messageCodeEnum, String value) {
         return String.format(Objects.requireNonNull(environment.getProperty(messageCodeEnum.getValue())), value);
     }
 }

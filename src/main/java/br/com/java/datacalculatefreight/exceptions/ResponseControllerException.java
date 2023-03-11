@@ -20,9 +20,9 @@ public class ResponseControllerException {
     MessageConfiguration messageConfiguration;
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleCustomExceptions(RuntimeException runtimeException) {
-        log.error(runtimeException.getMessage());
-        return buildResponseEntity(runtimeException.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleCustomExceptions(CustomException customException) {
+        log.error(customException.getMessage());
+        return buildResponseEntity(customException.getMessage(), customException.getHttpStatus());
     }
 
     @ExceptionHandler({NullPointerException.class, ClassCastException.class, LinkageError.class, AssertionError.class, ThreadDeath.class, VirtualMachineError.class})
