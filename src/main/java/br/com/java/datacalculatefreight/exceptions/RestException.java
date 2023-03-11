@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class RestException extends ResponseEntityExceptionHandler {
 
     private ErrorResponse getErrorResponse(HttpStatus httpStatus, List<ErrorObject> listErrorObject) {
         return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
                 .message(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_REQUEST_DEFAULT_MESSAGE))
                 .code(httpStatus.value())
                 .status(httpStatus.getReasonPhrase())

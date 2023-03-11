@@ -6,6 +6,7 @@ import br.com.java.datacalculatefreight.application.company.resource.CompanyResp
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
+import br.com.java.datacalculatefreight.utils.GenericValidations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,15 @@ public class CompanyService {
     MessageConfiguration messageConfiguration;
 
     @Autowired
+    GenericValidations genericValidations;
+
+    @Autowired
     CompanyRepository companyRepository;
 
     public CompanyResponse getById(Long id) {
-        validateId(id);
+        genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final var companyEntity = companyRepository.findById(id).orElseThrow(() -> new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND)));
         return CompanyResponse.from(companyEntity);
-    }
-
-    private void validateId(Long id) {
-        if (id <= 0) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_ID));
-        }
     }
 
     public CompanyResponse getByCnpj(String cnpj) {
