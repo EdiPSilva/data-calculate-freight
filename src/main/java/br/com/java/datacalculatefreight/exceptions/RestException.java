@@ -1,8 +1,12 @@
 package br.com.java.datacalculatefreight.exceptions;
 
+import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
+import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNullApi;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -14,21 +18,32 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class RestException extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    MessageConfiguration messageConfiguration;
+
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<ErrorObject> errors = getErrors(ex);
-        ErrorResponse errorResponse = getErrorResponse(ex, status, errors);
-        return new ResponseEntity<>(errorResponse, status);
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException methodArgumentNotValidException, HttpHeaders httpHeaders, HttpStatus httpStatus, WebRequest webRequest) {
+        List<ErrorObject> errors = getErrors(methodArgumentNotValidException);
+        ErrorResponse errorResponse = getErrorResponse(httpStatus, errors);
+        return new ResponseEntity<>(errorResponse, httpStatus);
     }
 
-    private ErrorResponse getErrorResponse(MethodArgumentNotValidException ex, HttpStatus status, List<ErrorObject> errors) {
-        return new ErrorResponse("Requisição possui campos inválidos", status.value(),
-                status.getReasonPhrase(), ex.getBindingResult().getObjectName(), errors);
+    private ErrorResponse getErrorResponse(HttpStatus httpStatus, List<ErrorObject> listErrorObject) {
+        return ErrorResponse.builder()
+                .message(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_REQUEST_DEFAULT_MESSAGE))
+                .code(httpStatus.value())
+                .status(httpStatus.getReasonPhrase())
+                .errors(listErrorObject)
+                .build();
     }
 
-    private List<ErrorObject> getErrors(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult().getFieldErrors().stream()
-                .map(error -> new ErrorObject(error.getDefaultMessage(), error.getField(), error.getRejectedValue()))
-                .collect(Collectors.toList());
+    private List<ErrorObject> getErrors(MethodArgumentNotValidException methodArgumentNotValidException) {
+        return methodArgumentNotValidException.getBindingResult().getFieldErrors().stream().map(
+                error -> ErrorObject.builder()
+                        .message(error.getDefaultMessage())
+                        .field(error.getField())
+                        .parameter(error.getRejectedValue())
+                        .build()
+                ).collect(Collectors.toList());
     }
 }

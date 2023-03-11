@@ -35,10 +35,10 @@ public class CompanyController {
     @ApiOperation("Cadastro de empresa")
     @PostMapping(value = "/v1/")
     public ResponseEntity<CompanyResponse> create(@RequestBody @Valid CompanyRequest companyRequest) {
-        /*final var companyResponse = companyService.create(companyRequest);
-        final var url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(companyResponse.getId()).toUri();
-        return ResponseEntity.created(url).body(companyResponse);*/
         final var companyResponse = companyService.create(companyRequest);
-        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
+        final var url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(companyResponse.getId()).toUri();
+        return ResponseEntity.created(url).body(companyResponse);
+        /*final var companyResponse = companyService.create(companyRequest);
+        return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);*/
     }
 }
