@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class CompanyRequest {
 
-    @NotBlank
+    @NotBlank(message = "Não deve estar em branco")
     @Size(max = 125)
     @ApiModelProperty(notes = "Nome da empresa", example = "JP Comercio ME", required = true)
     private String name;

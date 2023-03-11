@@ -25,7 +25,7 @@ public class ResponseControllerException {
         return buildResponseEntity(runtimeException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({NullPointerException.class, ClassCastException.class, LinkageError.class, AssertionError.class, ThreadDeath.class, VirtualMachineError.class})
     public ResponseEntity<ErrorResponse> handleInternalServerError(Exception exception) {
         log.error(exception.getMessage());
         exception.printStackTrace();

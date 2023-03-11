@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
+import java.util.Objects;
+
 @Configuration
 @PropertySource("messages.properties")
 public class MessageConfiguration {
@@ -14,5 +16,9 @@ public class MessageConfiguration {
 
     public String getMessageByCode(MessageCodeEnum messageCodeEnum) {
         return environment.getProperty(messageCodeEnum.getValue());
+    }
+
+    public String getMessageByCode(MessageCodeEnum messageCodeEnum, String... value) {
+        return String.format(Objects.requireNonNull(environment.getProperty(messageCodeEnum.getValue())), value);
     }
 }
