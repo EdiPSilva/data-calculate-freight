@@ -6,6 +6,7 @@ import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,12 @@ public class CompanyController {
         return ResponseEntity.ok(companyResponse);
     }
 
+    @ApiOperation("Empresas listagem")
+    @GetMapping(value = "/v1/")
+    public ResponseEntity<Page<CompanyResponse>> getAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+        return new ResponseEntity<>(companyService.getAll(page, size), HttpStatus.OK);
+    }
+
     @ApiOperation("Cadastro empresa")
     @PostMapping(value = "/v1/")
     public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
@@ -59,6 +66,7 @@ public class CompanyController {
     @ApiOperation("Remove empresa")
     @DeleteMapping(value = "/v1/{id}")
     public ResponseEntity<DefaultResponse> delete(@Valid @PathVariable("id") Long id) {
+        defaultLog.printLogExecutedEndpoint(HttpMethod.DELETE, API_V1);
         return new ResponseEntity<>(companyService.delete(id), HttpStatus.ACCEPTED);
     }
 }

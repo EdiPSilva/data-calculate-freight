@@ -11,10 +11,15 @@ import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
 import br.com.java.datacalculatefreight.utils.StatusMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -38,9 +43,18 @@ public class CompanyService {
         return CompanyResponse.from(companyEntity);
     }
 
+    public Page<CompanyResponse> getAll(Integer page, Integer size) {
+        if (page == null || page < 0) page = 0;
+        if (size == null || size < 1 || size > 10) size = 10;
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "name");
+        return new PageImpl<>(companyRepository.findAll().stream().map(companyEntity -> CompanyResponse.from(companyEntity)).collect(Collectors.toList()), pageRequest, size);
+    }
+
     public CompanyResponse create(final CompanyRequest companyRequest) {
         checkExistingCompanyByDocument(true, companyRequest.getDocument());
-        final var companyEntity = companyRepository.save(companyRequest.to());
+        var companyEntity = companyRequest.to();
+        companyEntity.setDateCreate(LocalDateTime.now());
+        companyEntity = companyRepository.save(companyEntity);
         return CompanyResponse.from(companyEntity);
     }
 
