@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,7 +78,11 @@ public class CompanyService {
 
     private CompanyEntity getCompanyEntityById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
-        return companyRepository.findById(id).orElseThrow(() -> new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND));
+        final Optional<CompanyEntity> optionalCompanyEntity = companyRepository.findById(id);
+        if (optionalCompanyEntity.isEmpty()) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
+        return optionalCompanyEntity.get();
     }
 
     private Long checkExistingCompanyByDocument(final boolean create, final String document) {
