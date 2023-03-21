@@ -36,7 +36,7 @@ public class CompanyController {
     @ApiOperation("Empresa por CNPJ")
     @GetMapping(value = "/v1/document/{CNPJ}")
     public ResponseEntity<CompanyResponse> getByDocument(@Valid @PathVariable("CNPJ") String document) {
-        defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1 + "/document/");
+        defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1 + "document/");
         final var companyResponse = companyService.getByDocument(document);
         return ResponseEntity.ok(companyResponse);
     }

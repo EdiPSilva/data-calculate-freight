@@ -40,31 +40,34 @@ public class CompanyService {
 
     public CompanyResponse getByDocument(final String document) {
         genericValidations.cnpjIsValid(document);
-        final var companyEntity = companyRepository.findByDocument(document);
+        final CompanyEntity companyEntity = companyRepository.findByDocument(document);
+        if (companyEntity == null) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
         return CompanyResponse.from(companyEntity);
     }
 
     public Page<CompanyResponse> getAll(Integer page, Integer size) {
         if (page == null || page < 0) page = 0;
         if (size == null || size < 1 || size > 10) size = 10;
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "name");
+        final PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "name");
         return new PageImpl<>(companyRepository.findAll().stream().map(companyEntity -> CompanyResponse.from(companyEntity)).collect(Collectors.toList()), pageRequest, size);
     }
 
     public CompanyResponse create(final CompanyRequest companyRequest) {
         checkExistingCompanyByDocument(true, companyRequest.getDocument());
-        var companyEntity = companyRequest.to();
+        CompanyEntity companyEntity = companyRequest.to();
         companyEntity.setDateCreate(LocalDateTime.now());
         companyEntity = companyRepository.save(companyEntity);
         return CompanyResponse.from(companyEntity);
     }
 
     public CompanyResponse update(final Long id, final CompanyRequest companyRequest) {
-        final var existingCompanyId = checkExistingCompanyByDocument(false, companyRequest.getDocument());
+        final Long existingCompanyId = checkExistingCompanyByDocument(false, companyRequest.getDocument());
         if (!existingCompanyId.equals(id)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND_BY_ID, id.toString()));
         }
-        var companyEntity = getCompanyEntityById(id);
+        CompanyEntity companyEntity = getCompanyEntityById(id);
         companyEntity.setName(companyRequest.getName());
         companyEntity.setDocument(companyRequest.getDocument());
         companyEntity.setPostalCode(companyRequest.getPostalCode());
@@ -87,7 +90,7 @@ public class CompanyService {
 
     private Long checkExistingCompanyByDocument(final boolean create, final String document) {
         genericValidations.cnpjIsValid(document);
-        final var existingCompanyId = companyRepository.findCompanyEntityByDocument(document);
+        final Long existingCompanyId = companyRepository.findCompanyEntityByDocument(document);
         if (existingCompanyId == null && Boolean.FALSE.equals(create)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND));
         } else if (existingCompanyId != null && Boolean.TRUE.equals(create)) {
@@ -98,8 +101,8 @@ public class CompanyService {
 
     public DefaultResponse delete(Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
-        final var companyEntity = getCompanyEntityById(id);
-        final var defaultResponse = DefaultResponse.builder()
+        final CompanyEntity companyEntity = getCompanyEntityById(id);
+        final DefaultResponse defaultResponse = DefaultResponse.builder()
                 .status(StatusMessageEnum.SUCCESS.getValue())
                 .object(CompanyResponse.from(companyEntity))
                 .build();
