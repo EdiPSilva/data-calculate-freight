@@ -19,7 +19,10 @@ public class GenericValidations {
     MessageConfiguration messageConfiguration;
 
     public void validatevalidateNumberGreaterThanZero(Long value, MessageCodeEnum messageCodeEnum) {
-        if (value <= 0) {
+        if (messageCodeEnum == null) {
+            throw new NullPointerException();
+        }
+        if (value == null || value <= 0) {
             throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum));
         }
     }
