@@ -55,10 +55,10 @@ public class CompanyServiceTest {
         final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity(id).getCompanyEntity();
         final Optional<CompanyEntity> optionalCompanyEntity = Optional.of(companyEntity);
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
-        compareCompanyEntity(companyEntity, assertDoesNotThrow(() -> companyService.getById(id)));
+        compare(companyEntity, assertDoesNotThrow(() -> companyService.getById(id)));
     }
 
-    private void compareCompanyEntity(final CompanyEntity companyEntity, final CompanyResponse companyResponse) {
+    private void compare(final CompanyEntity companyEntity, final CompanyResponse companyResponse) {
         assertNotNull(companyEntity);
         assertNotNull(companyResponse);
         assertEquals(companyEntity.getId(), companyResponse.getId());
@@ -84,15 +84,15 @@ public class CompanyServiceTest {
         final String document = "33662514000161";
         final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity().getCompanyEntity();
         when(companyRepository.findByDocument(document)).thenReturn(companyEntity);
-        compareCompanyEntity(companyEntity, assertDoesNotThrow(() -> companyService.getByDocument(document)));
+        compare(companyEntity, assertDoesNotThrow(() -> companyService.getByDocument(document)));
     }
 
     @Test
     @DisplayName("Deve retornar erro quando documento já existir")
     public void shouldReturnErrorWhenDocumentAlreadyExists() {
         final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
-        final Long existingCompanyId = 1l;
-        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingCompanyId);
+        final Long existingId = 1l;
+        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.create(companyRequest));
     }
 
@@ -102,13 +102,13 @@ public class CompanyServiceTest {
         final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
         final CompanyEntity companyEntity = CompanyEntityBuilder.getCompanyEntityByCompanyRequest(companyRequest).getCompanyEntity();
         companyEntity.setId(1l);
-        final Long existingCompanyId = null;
-        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingCompanyId);
+        final Long existingId = null;
+        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         when(companyRepository.save(Mockito.any())).thenReturn(companyEntity);
-        compareCompanyEntity(companyRequest, assertDoesNotThrow(() -> companyService.create(companyRequest)));
+        compare(companyRequest, assertDoesNotThrow(() -> companyService.create(companyRequest)));
     }
 
-    private void compareCompanyEntity(final CompanyRequest companyRequest, final CompanyResponse companyResponse) {
+    private void compare(final CompanyRequest companyRequest, final CompanyResponse companyResponse) {
         assertNotNull(companyRequest);
         assertNotNull(companyResponse);
         assertNotNull(companyResponse.getId());
@@ -124,8 +124,8 @@ public class CompanyServiceTest {
     public void shouldReturnErrorWhenNotFoundCompanyByDocumentInRegistryUpdate() {
         final Long id = 1l;
         final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
-        final Long existingCompanyId = null;
-        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingCompanyId);
+        final Long existingId = null;
+        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.update(id, companyRequest));
     }
 
@@ -134,8 +134,8 @@ public class CompanyServiceTest {
     public void shouldReturnErrorWhenFoundCompanyByDocumentWithOtherIdInRegistryUpdate() {
         final Long id = 1l;
         final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
-        final Long existingCompanyId = 2l;
-        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingCompanyId);
+        final Long existingId = 2l;
+        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.update(id, companyRequest));
     }
 
@@ -145,8 +145,8 @@ public class CompanyServiceTest {
         final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
 
         final Long id = 1l;
-        final Long existingCompanyId = id;
-        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingCompanyId);
+        final Long existingId = id;
+        when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
 
         final CompanyEntity companyEntity = CompanyEntityBuilder.getCompanyEntityByCompanyRequest(companyRequest).getCompanyEntity();
         companyEntity.setId(1l);
@@ -154,7 +154,7 @@ public class CompanyServiceTest {
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
         when(companyRepository.save(Mockito.any())).thenReturn(companyEntity);
 
-        compareCompanyEntity(companyRequest, assertDoesNotThrow(() -> companyService.update(id, companyRequest)));
+        compare(companyRequest, assertDoesNotThrow(() -> companyService.update(id, companyRequest)));
     }
 
     @Test
@@ -175,7 +175,6 @@ public class CompanyServiceTest {
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
 
         final DefaultResponse defaultResponse = assertDoesNotThrow(() -> companyService.delete(id));
-        assertNotNull(companyEntity);
         assertNotNull(defaultResponse);
         assertNotNull(defaultResponse.getObject());
         assertEquals(StatusMessageEnum.SUCCESS.getValue(), defaultResponse.getStatus());
