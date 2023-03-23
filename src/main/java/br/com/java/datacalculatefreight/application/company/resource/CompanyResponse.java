@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyResponse {
 
-    public CompanyResponse(CompanyEntity companyEntity) {
+    private CompanyResponse(CompanyEntity companyEntity) {
         this.id = companyEntity.getId();
         this.name = companyEntity.getName();
         this.document = companyEntity.getDocument();

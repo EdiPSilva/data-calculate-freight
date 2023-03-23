@@ -29,7 +29,7 @@ public class CompanyController {
     @GetMapping(value = "/v1/{id}")
     public ResponseEntity<CompanyResponse> getById(@Valid @PathVariable("id") Long id) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1);
-        final var companyResponse = companyService.getById(id);
+        final CompanyResponse companyResponse = companyService.getById(id);
         return ResponseEntity.ok(companyResponse);
     }
 
@@ -37,7 +37,7 @@ public class CompanyController {
     @GetMapping(value = "/v1/document/{CNPJ}")
     public ResponseEntity<CompanyResponse> getByDocument(@Valid @PathVariable("CNPJ") String document) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1 + "document/");
-        final var companyResponse = companyService.getByDocument(document);
+        final CompanyResponse companyResponse = companyService.getByDocument(document);
         return ResponseEntity.ok(companyResponse);
     }
 
@@ -51,7 +51,7 @@ public class CompanyController {
     @PostMapping(value = "/v1/")
     public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.POST, API_V1);
-        final var companyResponse = companyService.create(companyRequest);
+        final CompanyResponse companyResponse = companyService.create(companyRequest);
         return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
     }
 
@@ -59,7 +59,7 @@ public class CompanyController {
     @PutMapping(value = "/v1/{id}")
     public ResponseEntity<CompanyResponse> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody CompanyRequest companyRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.PUT, API_V1);
-        final var companyResponse = companyService.update(id, companyRequest);
+        final CompanyResponse companyResponse = companyService.update(id, companyRequest);
         return new ResponseEntity<>(companyResponse, HttpStatus.CREATED);
     }
 
