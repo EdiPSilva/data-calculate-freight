@@ -1,12 +1,7 @@
 package br.com.java.datacalculatefreight.application.shippingCompany;
 
-import br.com.java.datacalculatefreight.application.company.builder.CompanyEntityBuilder;
-import br.com.java.datacalculatefreight.application.company.builder.CompanyRequestBuilder;
-import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
-import br.com.java.datacalculatefreight.application.company.resource.CompanyRequest;
-import br.com.java.datacalculatefreight.application.company.resource.CompanyResponse;
-import br.com.java.datacalculatefreight.application.shippingCompany.resource.ShippingCompanyRequest;
-import br.com.java.datacalculatefreight.application.shippingCompany.resource.ShippingCompanyResponse;
+import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyRequest;
+import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import br.com.java.datacalculatefreight.application.shippingCompany.builder.ShippingCompanyEntityBuilder;
 import br.com.java.datacalculatefreight.application.shippingCompany.builder.ShippingCompanyRequestBuilder;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;

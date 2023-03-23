@@ -4,8 +4,8 @@ import br.com.java.datacalculatefreight.application.company.builder.CompanyEntit
 import br.com.java.datacalculatefreight.application.company.builder.CompanyRequestBuilder;
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyRepository;
-import br.com.java.datacalculatefreight.application.company.resource.CompanyRequest;
-import br.com.java.datacalculatefreight.application.company.resource.CompanyResponse;
+import br.com.java.datacalculatefreight.application.company.resources.CompanyRequest;
+import br.com.java.datacalculatefreight.application.company.resources.CompanyResponse;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
 import br.com.java.datacalculatefreight.utils.DefaultResponse;

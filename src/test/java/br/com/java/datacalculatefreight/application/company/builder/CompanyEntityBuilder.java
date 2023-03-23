@@ -1,7 +1,7 @@
 package br.com.java.datacalculatefreight.application.company.builder;
 
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
-import br.com.java.datacalculatefreight.application.company.resource.CompanyRequest;
+import br.com.java.datacalculatefreight.application.company.resources.CompanyRequest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

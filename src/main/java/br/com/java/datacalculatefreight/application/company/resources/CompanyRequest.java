@@ -1,4 +1,4 @@
-package br.com.java.datacalculatefreight.application.company.resource;
+package br.com.java.datacalculatefreight.application.company.resources;
 
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package br.com.java.datacalculatefreight.application.shippingCompany.resource;
+package br.com.java.datacalculatefreight.application.shippingCompany.resources;
 
 import br.com.java.datacalculatefreight.application.shippingCompany.ShippingCompanyService;
 import br.com.java.datacalculatefreight.utils.DefaultLog;

@@ -1,6 +1,6 @@
 package br.com.java.datacalculatefreight.application.company.builder;
 
-import br.com.java.datacalculatefreight.application.company.resource.CompanyRequest;
+import br.com.java.datacalculatefreight.application.company.resources.CompanyRequest;
 
 public class CompanyRequestBuilder {
 
