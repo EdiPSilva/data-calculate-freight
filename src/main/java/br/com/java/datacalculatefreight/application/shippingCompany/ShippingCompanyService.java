@@ -63,8 +63,9 @@ public class ShippingCompanyService {
     }
 
     public ShippingCompanyResponse update(final Long id, final ShippingCompanyRequest shippingCompanyRequest) {
-        final Long existingCompanyId = checkExistingCompanyByDocument(false, shippingCompanyRequest.getDocument());
-        if (!existingCompanyId.equals(id)) {
+        genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
+        final Long existingId = checkExistingCompanyByDocument(false, shippingCompanyRequest.getDocument());
+        if (!existingId.equals(id)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND_BY_ID, id.toString()));
         }
         ShippingCompanyEntity shippingCompanyEntity = getShippingCompanyById(id);

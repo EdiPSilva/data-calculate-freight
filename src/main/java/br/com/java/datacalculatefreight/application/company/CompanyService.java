@@ -63,6 +63,7 @@ public class CompanyService {
     }
 
     public CompanyResponse update(final Long id, final CompanyRequest companyRequest) {
+        genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Long existingCompanyId = checkExistingCompanyByDocument(false, companyRequest.getDocument());
         if (!existingCompanyId.equals(id)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND_BY_ID, id.toString()));
