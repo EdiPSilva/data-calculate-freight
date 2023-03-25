@@ -87,7 +87,7 @@ public class TypeDeliveryService {
 
     public TypeDeliveryResponse update(Long id, TypeDeliveryRequest typeDeliveryRequest) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
-        final Long existingId = checkExistingTypeDeliveryByType(true, typeDeliveryRequest.getType());
+        final Long existingId = checkExistingTypeDeliveryByType(false, typeDeliveryRequest.getType());
         if (!existingId.equals(id)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND_BY_ID, id.toString()));
         }

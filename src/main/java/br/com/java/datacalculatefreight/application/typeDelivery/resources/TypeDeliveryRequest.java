@@ -15,7 +15,7 @@ public class TypeDeliveryRequest {
 
     @NotBlank(message = "Não deve estar em branco")
     @Size(max = 125)
-    @ApiModelProperty(notes = "Tipo entrega", example = "JP Log ME", required = true)
+    @ApiModelProperty(notes = "Tipo entrega", example = "EXPRESS", required = true)
     private String type;
 
     @NotNull

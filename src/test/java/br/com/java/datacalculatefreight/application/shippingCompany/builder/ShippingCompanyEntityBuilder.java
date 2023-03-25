@@ -2,6 +2,7 @@ package br.com.java.datacalculatefreight.application.shippingCompany.builder;
 
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyRequest;
+import br.com.java.datacalculatefreight.utils.Fuctions;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +26,7 @@ public class ShippingCompanyEntityBuilder {
                 .name("JP Log ME")
                 .document("88449952000138")
                 .active(true)
-                .dateCreate(getCreateDate())
+                .dateCreate(Fuctions.getCreateDate())
                 .build();
         return builder;
     }
@@ -35,12 +36,6 @@ public class ShippingCompanyEntityBuilder {
         builder.shippingCompanyEntity = shippingCompanyRequest.to();
         builder.shippingCompanyEntity.setDateCreate(LocalDateTime.now());
         return builder;
-    }
-
-    private static LocalDateTime getCreateDate() {
-        final String stringDate = "2023-03-20 20:00";
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(stringDate, formatter);
     }
 
     public ShippingCompanyEntity getShippingCompanyEntity() {
