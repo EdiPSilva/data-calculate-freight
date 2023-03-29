@@ -1,0 +1,1 @@
+alter table country_states drop column date_update;

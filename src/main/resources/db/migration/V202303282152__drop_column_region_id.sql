@@ -1,0 +1,1 @@
+alter table freight_route drop column region_id;

@@ -8,7 +8,9 @@ public enum MessageCodeEnum {
     REGISTER_NOT_FOUND_BY_ID("register.not.found.by.id"),
     INVALID_DOCUMENT("invalid.document"),
     DOCUMENT_ALREADY_CADASTRE("document.already.cadastre"),
-    REGISTER_ALREADY_CADASTRE("register.already.cadastre");
+    REGISTER_ALREADY_CADASTRE("register.already.cadastre"),
+
+    INVALID_STATE_ABBREVIATION("invalid.state.abbreviation");
 
     private String value;
 
