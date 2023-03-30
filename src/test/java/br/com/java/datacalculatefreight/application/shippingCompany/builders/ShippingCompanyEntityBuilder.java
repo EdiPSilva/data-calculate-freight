@@ -1,11 +1,10 @@
-package br.com.java.datacalculatefreight.application.shippingCompany.builder;
+package br.com.java.datacalculatefreight.application.shippingCompany.builders;
 
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyRequest;
 import br.com.java.datacalculatefreight.utils.Fuctions;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ShippingCompanyEntityBuilder {
 

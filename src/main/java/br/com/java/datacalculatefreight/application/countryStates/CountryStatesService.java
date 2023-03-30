@@ -43,11 +43,11 @@ public class CountryStatesService {
         return optionalCountryStatesEntity.get();
     }
 
-    public CountryStatesResponse getByState(String uf) {
-        if (uf == null || uf.trim().isEmpty()) {
+    public CountryStatesResponse getByStateCode(final String stateCode) {
+        if (stateCode == null || stateCode.trim().isEmpty() || stateCode.trim().length() != 2) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_STATE_ABBREVIATION), HttpStatus.NOT_FOUND);
         }
-        final CountryStatesEntity countryStatesEntity = countryStatesRepository.findByStateCode(uf);
+        final CountryStatesEntity countryStatesEntity = countryStatesRepository.findByStateCode(stateCode.toUpperCase().trim());
         if (countryStatesEntity == null) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
         }

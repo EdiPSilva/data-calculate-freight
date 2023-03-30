@@ -1,4 +1,4 @@
-package br.com.java.datacalculatefreight.application.company.builder;
+package br.com.java.datacalculatefreight.application.company.builders;
 
 import br.com.java.datacalculatefreight.application.company.resources.CompanyRequest;
 

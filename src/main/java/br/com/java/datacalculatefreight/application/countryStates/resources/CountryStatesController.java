@@ -38,7 +38,7 @@ public class CountryStatesController {
     @GetMapping(value = "/v1/uf/{UF}")
     public ResponseEntity<CountryStatesResponse> getByDocument(@Valid @PathVariable("UF") String uf) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1 + "document/");
-        final CountryStatesResponse countryStatesResponse = countryStatesService.getByState(uf);
+        final CountryStatesResponse countryStatesResponse = countryStatesService.getByStateCode(uf);
         return ResponseEntity.ok(countryStatesResponse);
     }
 
