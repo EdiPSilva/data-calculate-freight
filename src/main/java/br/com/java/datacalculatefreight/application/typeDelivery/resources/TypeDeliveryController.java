@@ -46,8 +46,11 @@ public class TypeDeliveryController {
 
     @ApiOperation("Tipo entrega listagem")
     @GetMapping(value = "/v1/")
-    public ResponseEntity<Page<TypeDeliveryResponse>> getAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        return new ResponseEntity<>(typeDeliveryService.getAll(page, size), HttpStatus.OK);
+    public ResponseEntity<Page<TypeDeliveryResponse>> getAll(@RequestParam(required = false) Integer page,
+                                                             @RequestParam(required = false) Integer size,
+                                                             @RequestParam(required = false) String sortBy,
+                                                             @RequestParam(required = false) String sortDirection) {
+        return new ResponseEntity<>(typeDeliveryService.getAll(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 
     @ApiOperation("Cadastro tipo entrega")

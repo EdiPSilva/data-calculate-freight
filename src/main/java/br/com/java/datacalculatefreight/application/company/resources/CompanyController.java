@@ -43,8 +43,11 @@ public class CompanyController {
 
     @ApiOperation("Empresas listagem")
     @GetMapping(value = "/v1/")
-    public ResponseEntity<Page<CompanyResponse>> getAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        return new ResponseEntity<>(companyService.getAll(page, size), HttpStatus.OK);
+    public ResponseEntity<Page<CompanyResponse>> getAll(@RequestParam(required = false) Integer page,
+                                                        @RequestParam(required = false) Integer size,
+                                                        @RequestParam(required = false) String sortBy,
+                                                        @RequestParam(required = false) String sortDirection) {
+        return new ResponseEntity<>(companyService.getAll(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 
     @ApiOperation("Cadastro empresa")

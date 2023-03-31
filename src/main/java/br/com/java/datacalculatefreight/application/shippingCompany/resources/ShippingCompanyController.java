@@ -44,8 +44,11 @@ public class ShippingCompanyController {
 
     @ApiOperation("Transportadora listagem")
     @GetMapping(value = "/v1/")
-    public ResponseEntity<Page<ShippingCompanyResponse>> getAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        return new ResponseEntity<>(shippingCompanyService.getAll(page, size), HttpStatus.OK);
+    public ResponseEntity<Page<ShippingCompanyResponse>> getAll(@RequestParam(required = false) Integer page,
+                                                                @RequestParam(required = false) Integer size,
+                                                                @RequestParam(required = false) String sortBy,
+                                                                @RequestParam(required = false) String sortDirection) {
+        return new ResponseEntity<>(shippingCompanyService.getAll(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 
     @ApiOperation("Cadastro transportadora")

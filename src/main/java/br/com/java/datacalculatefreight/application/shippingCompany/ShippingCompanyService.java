@@ -1,5 +1,6 @@
 package br.com.java.datacalculatefreight.application.shippingCompany;
 
+import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyRepository;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
@@ -7,14 +8,13 @@ import br.com.java.datacalculatefreight.application.shippingCompany.resources.Sh
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
+import br.com.java.datacalculatefreight.pageable.GenericPageable;
+import br.com.java.datacalculatefreight.pageable.PageableDto;
 import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
 import br.com.java.datacalculatefreight.utils.StatusMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +34,9 @@ public class ShippingCompanyService {
     @Autowired
     ShippingCompanyRepository shippingCompanyRepository;
 
+    @Autowired
+    GenericPageable genericPageable;
+
     public ShippingCompanyResponse getById(Long id) {
         return ShippingCompanyResponse.from(getShippingCompanyById(id));
     }
@@ -47,11 +50,9 @@ public class ShippingCompanyService {
         return ShippingCompanyResponse.from(shippingCompanyEntity);
     }
 
-    public Page<ShippingCompanyResponse> getAll(Integer page, Integer size) {
-        if (page == null || page < 0) page = 0;
-        if (size == null || size < 1 || size > 10) size = 10;
-        final PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "name");
-        return new PageImpl<>(shippingCompanyRepository.findAll().stream().map(shippingCompanyEntity -> ShippingCompanyResponse.from(shippingCompanyEntity)).collect(Collectors.toList()), pageRequest, size);
+    public Page<ShippingCompanyResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        return new PageImpl<>(shippingCompanyRepository.findAll(pageable).stream().map(shippingCompanyEntity -> ShippingCompanyResponse.from(shippingCompanyEntity)).collect(Collectors.toList()));
     }
 
     public ShippingCompanyResponse create(final ShippingCompanyRequest shippingCompanyRequest) {

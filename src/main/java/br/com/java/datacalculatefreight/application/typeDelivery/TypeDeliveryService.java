@@ -1,5 +1,6 @@
 package br.com.java.datacalculatefreight.application.typeDelivery;
 
+import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import br.com.java.datacalculatefreight.application.typeDelivery.persistence.TypeDeliveryEntity;
@@ -9,14 +10,13 @@ import br.com.java.datacalculatefreight.application.typeDelivery.resources.TypeD
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
+import br.com.java.datacalculatefreight.pageable.GenericPageable;
+import br.com.java.datacalculatefreight.pageable.PageableDto;
 import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
 import br.com.java.datacalculatefreight.utils.StatusMessageEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +35,9 @@ public class TypeDeliveryService {
 
     @Autowired
     TypeDeliveryRepository typeDeliveryRepository;
+
+    @Autowired
+    GenericPageable genericPageable;
 
     public TypeDeliveryResponse getById(final Long id) {
         return TypeDeliveryResponse.from(getTypeDeliveryById(id));
@@ -61,11 +64,9 @@ public class TypeDeliveryService {
         return value.toUpperCase().trim();
     }
 
-    public Page<TypeDeliveryResponse> getAll(Integer page, Integer size) {
-        if (page == null || page < 0) page = 0;
-        if (size == null || size < 1 || size > 10) size = 10;
-        final PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "type");
-        return new PageImpl<>(typeDeliveryRepository.findAll().stream().map(typeDeliveryEntity -> TypeDeliveryResponse.from(typeDeliveryEntity)).collect(Collectors.toList()), pageRequest, size);
+    public Page<TypeDeliveryResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        return new PageImpl<>(typeDeliveryRepository.findAll(pageable).stream().map(typeDeliveryEntity -> TypeDeliveryResponse.from(typeDeliveryEntity)).collect(Collectors.toList()));
     }
 
     public TypeDeliveryResponse create(final TypeDeliveryRequest typeDeliveryRequest) {
