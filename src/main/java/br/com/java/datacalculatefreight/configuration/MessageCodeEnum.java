@@ -10,7 +10,9 @@ public enum MessageCodeEnum {
     DOCUMENT_ALREADY_CADASTRE("document.already.cadastre"),
     REGISTER_ALREADY_CADASTRE("register.already.cadastre"),
 
-    INVALID_STATE_ABBREVIATION("invalid.state.abbreviation");
+    INVALID_STATE_ABBREVIATION("invalid.state.abbreviation"),
+
+    COLUMN_NOT_FOUND("column.not.found");
 
     private String value;
 

@@ -44,7 +44,10 @@ public class CountryStatesController {
 
     @ApiOperation("Estado listagem")
     @GetMapping(value = "/v1/")
-    public ResponseEntity<Page<CountryStatesResponse>> getAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        return new ResponseEntity<>(countryStatesService.getAll(page, size), HttpStatus.OK);
+    public ResponseEntity<Page<CountryStatesResponse>> getAll(@RequestParam(required = false) Integer page,
+                                                              @RequestParam(required = false) Integer size,
+                                                              @RequestParam(required = false) String sortBy,
+                                                              @RequestParam(required = false) String sortDirection) {
+        return new ResponseEntity<>(countryStatesService.getAll(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 }

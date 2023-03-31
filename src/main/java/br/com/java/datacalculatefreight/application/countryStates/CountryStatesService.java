@@ -6,12 +6,11 @@ import br.com.java.datacalculatefreight.application.countryStates.resources.Coun
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
+import br.com.java.datacalculatefreight.pageable.GenericPageable;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
+import br.com.java.datacalculatefreight.pageable.PageableDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,9 @@ public class CountryStatesService {
 
     @Autowired
     CountryStatesRepository countryStatesRepository;
+
+    @Autowired
+    GenericPageable genericPageable;
 
     public CountryStatesResponse getById(Long id) {
         return CountryStatesResponse.from(getCountryStatesById(id));
@@ -54,10 +56,8 @@ public class CountryStatesService {
         return CountryStatesResponse.from(countryStatesEntity);
     }
 
-    public Page<CountryStatesResponse> getAll(Integer page, Integer size) {
-        if (page == null || page < 0) page = 0;
-        if (size == null || size < 1 || size > 10) size = 10;
-        final PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "state");
-        return new PageImpl<>(countryStatesRepository.findAll().stream().map(countryStatesEntity -> CountryStatesResponse.from(countryStatesEntity)).collect(Collectors.toList()), pageRequest, size);
+    public Page<CountryStatesResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        return new PageImpl<>(countryStatesRepository.findAll(pageable).stream().map(countryStatesEntity -> CountryStatesResponse.from(countryStatesEntity)).collect(Collectors.toList()));
     }
 }
