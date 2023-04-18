@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "calculation-freight")
+@Table(name = "calculation_freight")
 public class CalculationFreightEntity {
 
     @Id
@@ -22,7 +22,7 @@ public class CalculationFreightEntity {
     @Column(columnDefinition = "serial")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipping_company_id")
     private ShippingCompanyEntity shippingCompanyEntity;
 

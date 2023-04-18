@@ -1,5 +1,7 @@
 package br.com.java.datacalculatefreight.application.calculationFreight.resources;
 
+import br.com.java.datacalculatefreight.application.calculationFreight.persistence.CalculationFreightEntity;
+import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +14,26 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CalculationFreightResponse {
 
-    //TODO - utilizar do response da transportadora no construtor desta classe
+    public CalculationFreightResponse(CalculationFreightEntity calculationFreightEntity) {
+        this.id = calculationFreightEntity.getId();
+        this.senderPostalCode = calculationFreightEntity.getSenderPostalCode();
+        this.destinyPostalCode = calculationFreightEntity.getDestinyPostalCode();
+        this.width = calculationFreightEntity.getWidth();
+        this.height = calculationFreightEntity.getHeight();
+        this.length = calculationFreightEntity.getLength();
+        this.cubage = calculationFreightEntity.getCubage();
+        this.weight = calculationFreightEntity.getWeight();
+        this.freightValue = calculationFreightEntity.getFreightValue();
+        this.dateCreate = calculationFreightEntity.getDateCreate();
+        this.dateUpdate = calculationFreightEntity.getDateUpdate();
+        setShippingCompanyResponse(calculationFreightEntity.getShippingCompanyEntity());
+    }
+
+    private void setShippingCompanyResponse(ShippingCompanyEntity shippingCompanyEntity) {
+        if (shippingCompanyEntity != null) {
+            this.shippingCompany = ShippingCompanyResponse.from(shippingCompanyEntity);
+        }
+    }
 
     @ApiModelProperty(notes = "Id do cálculo de frete", example = "1", required = true)
     private Long id;
@@ -51,4 +72,8 @@ public class CalculationFreightResponse {
     @ApiModelProperty(notes = "Data de atualização", example = "dd/MM/yyyy hh:mm:ss", required = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private LocalDateTime dateUpdate;
+
+    public static CalculationFreightResponse from(final CalculationFreightEntity calculationFreightEntity) {
+        return new CalculationFreightResponse(calculationFreightEntity);
+    }
 }

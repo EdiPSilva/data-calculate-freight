@@ -1,0 +1,2 @@
+alter table freight_route drop constraint range_freight_id_in_freight_route_fk;
+alter table freight_route drop column range_freight_id;

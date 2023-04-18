@@ -4,7 +4,6 @@ import br.com.java.datacalculatefreight.application.company.persistence.CompanyE
 import br.com.java.datacalculatefreight.application.company.persistence.CompanyRepository;
 import br.com.java.datacalculatefreight.application.company.resources.CompanyRequest;
 import br.com.java.datacalculatefreight.application.company.resources.CompanyResponse;
-import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
@@ -52,7 +51,7 @@ public class CompanyService {
 
     public Page<CompanyResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
         final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CompanyEntity.class, sortBy, sortDirection));
-        return new PageImpl<>(companyRepository.findAll(pageable).stream().map(companyEntity -> CompanyResponse.from(companyEntity)).collect(Collectors.toList()));
+        return new PageImpl<>(companyRepository.findAll(pageable).stream().map(CompanyResponse::from).collect(Collectors.toList()));
     }
 
     public CompanyResponse create(final CompanyRequest companyRequest) {
