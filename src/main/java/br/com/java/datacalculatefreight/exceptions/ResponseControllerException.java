@@ -1,13 +1,13 @@
 package br.com.java.datacalculatefreight.exceptions;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ public class ResponseControllerException {
         return buildResponseEntity(customException.getMessage(), customException.getHttpStatus());
     }
 
-    @ExceptionHandler({NullPointerException.class, ClassCastException.class, LinkageError.class, AssertionError.class, ThreadDeath.class, VirtualMachineError.class})
+    @ExceptionHandler({NullPointerException.class, ClassCastException.class, LinkageError.class, AssertionError.class, ThreadDeath.class, VirtualMachineError.class, JsonMappingException.class})
     public ResponseEntity<ErrorResponse> handleInternalServerError(Exception exception) {
         log.error(exception.getMessage());
         exception.printStackTrace();

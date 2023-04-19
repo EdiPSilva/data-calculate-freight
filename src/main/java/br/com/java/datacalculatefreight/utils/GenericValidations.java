@@ -1,5 +1,6 @@
 package br.com.java.datacalculatefreight.utils;
 
+import br.com.java.datacalculatefreight.application.freightRoute.persistence.StatesEnum;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
@@ -81,4 +82,24 @@ public class GenericValidations {
         }
     }
 
+    public void validatePostCode(final String postCode, final MessageCodeEnum messageCodeEnum) {
+        if (postCode == null) {
+            throw new NullPointerException();
+        }
+        if (postCode.isEmpty() || postCode.length() != 8) {
+            throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum));
+        }
+    }
+
+    public StatesEnum getStatesByCode(final String stateCode) {
+        if (stateCode == null || stateCode.trim().length() != 2) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_STATE));
+        }
+        for (StatesEnum state: StatesEnum.values()) {
+            if (stateCode.equals(state.getStateCode())) {
+                return state;
+            }
+        }
+        throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.STATE_NOT_FOUND));
+    }
 }

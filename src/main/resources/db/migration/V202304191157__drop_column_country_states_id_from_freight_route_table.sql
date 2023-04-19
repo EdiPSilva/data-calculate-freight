@@ -1,0 +1,2 @@
+alter table freight_route drop constraint country_states_id_in_freight_route_fk;
+alter table freight_route drop column country_states_id;

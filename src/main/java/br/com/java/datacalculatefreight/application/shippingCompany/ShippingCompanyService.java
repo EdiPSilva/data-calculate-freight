@@ -56,7 +56,7 @@ public class ShippingCompanyService {
     }
 
     public ShippingCompanyResponse create(final ShippingCompanyRequest shippingCompanyRequest) {
-        checkExistingCompanyByDocument(true, shippingCompanyRequest.getDocument());
+        checkExistingShippingCompanyByDocument(true, shippingCompanyRequest.getDocument());
         ShippingCompanyEntity shippingCompanyEntity = shippingCompanyRequest.to();
         shippingCompanyEntity.setDateCreate(LocalDateTime.now());
         shippingCompanyEntity = shippingCompanyRepository.save(shippingCompanyEntity);
@@ -65,7 +65,7 @@ public class ShippingCompanyService {
 
     public ShippingCompanyResponse update(final Long id, final ShippingCompanyRequest shippingCompanyRequest) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
-        final Long existingId = checkExistingCompanyByDocument(false, shippingCompanyRequest.getDocument());
+        final Long existingId = checkExistingShippingCompanyByDocument(false, shippingCompanyRequest.getDocument());
         if (!existingId.equals(id)) {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND_BY_ID, id.toString()));
         }
@@ -89,7 +89,7 @@ public class ShippingCompanyService {
         return optionalShippingCompanyEntity.get();
     }
 
-    private Long checkExistingCompanyByDocument(final boolean create, final String document) {
+    private Long checkExistingShippingCompanyByDocument(final boolean create, final String document) {
         genericValidations.cnpjIsValid(document);
         final Long existingShippingCompanyId = shippingCompanyRepository.findShippingCompanyEntityByDocument(document);
         if (existingShippingCompanyId == null && Boolean.FALSE.equals(create)) {
