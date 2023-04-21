@@ -47,7 +47,7 @@ public class RangeFreightService {
         return RangeFreightResponse.from(getRangeFreightById(id));
     }
 
-    private RangeFreightEntity getRangeFreightById(final Long id) {
+    public RangeFreightEntity getRangeFreightById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = rangeFreightRepository.findById(id);
         if (optionalRangeFreightEntity.isEmpty()) {

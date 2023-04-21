@@ -1,0 +1,1 @@
+alter table calculation_type_range_freight add column date_update timestamp;

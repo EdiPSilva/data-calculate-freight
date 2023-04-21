@@ -42,7 +42,7 @@ public class FreightRouteService {
         return FreightRouteResponse.from(getFreightRouteById(id));
     }
 
-    private FreightRouteEntity getFreightRouteById(final Long id) {
+    public FreightRouteEntity getFreightRouteById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<FreightRouteEntity> optionalFreightRouteEntity = freightRouteRepository.findById(id);
         if (optionalFreightRouteEntity.isEmpty()) {

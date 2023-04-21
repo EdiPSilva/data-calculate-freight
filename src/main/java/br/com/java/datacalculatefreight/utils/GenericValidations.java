@@ -1,5 +1,6 @@
 package br.com.java.datacalculatefreight.utils;
 
+import br.com.java.datacalculatefreight.application.calculationTypeRangeFreight.persistence.CalculationTypeEnum;
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.StatesEnum;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
@@ -96,10 +97,22 @@ public class GenericValidations {
             throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_STATE));
         }
         for (StatesEnum state: StatesEnum.values()) {
-            if (stateCode.equals(state.getStateCode())) {
+            if (stateCode.toUpperCase().equals(state.getStateCode())) {
                 return state;
             }
         }
         throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.STATE_NOT_FOUND));
+    }
+
+    public CalculationTypeEnum getCalculationTypeEnum(final String value) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.INVALID_CALCULATION_TYPE));
+        }
+        for (CalculationTypeEnum calculationTypeEnum: CalculationTypeEnum.values()) {
+            if (value.toUpperCase().equals(calculationTypeEnum.getValue())) {
+                return calculationTypeEnum;
+            }
+        }
+        throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.CALCULATION_TYPE_NOT_FOUND));
     }
 }

@@ -16,7 +16,9 @@ public enum MessageCodeEnum {
     STATE_NOT_FOUND("state.not.exists"),
     START_POSTAL_CODE_ALREADY_CADASTRE("start.postal.code.already.cadastre"),
     END_POSTAL_CODE_ALREADY_CADASTRE("end.postal.code.already.cadastre"),
-    START_AND_END_POSTAL_CODE_EQUALS("start.and.end.postal.code.equals");
+    START_AND_END_POSTAL_CODE_EQUALS("start.and.end.postal.code.equals"),
+    INVALID_CALCULATION_TYPE("invalid.calculation.type"),
+    CALCULATION_TYPE_NOT_FOUND("calculation.type.not.found");
 
     private String value;
 

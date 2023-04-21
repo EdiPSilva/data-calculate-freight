@@ -40,7 +40,7 @@ public class TypeDeliveryService {
         return TypeDeliveryResponse.from(getTypeDeliveryById(id));
     }
 
-    private TypeDeliveryEntity getTypeDeliveryById(final Long id) {
+    public TypeDeliveryEntity getTypeDeliveryById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<TypeDeliveryEntity> optionalTypeDeliveryEntity = typeDeliveryRepository.findById(id);
         if (optionalTypeDeliveryEntity.isEmpty()) {
