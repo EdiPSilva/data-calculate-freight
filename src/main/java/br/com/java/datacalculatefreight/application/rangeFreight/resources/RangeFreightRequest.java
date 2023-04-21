@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -37,10 +36,6 @@ public class RangeFreightRequest {
     @NotNull
     @ApiModelProperty(notes = "Status", example = "true", required = true)
     private Boolean active;
-
-    public RangeFreightEntity to() {
-        return to(null);
-    }
 
     public RangeFreightEntity to(final ShippingCompanyEntity shippingCompanyEntity) {
         return RangeFreightEntity.builder()
