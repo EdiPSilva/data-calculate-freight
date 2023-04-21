@@ -166,8 +166,8 @@ public class ShippingCompanyServiceTest {
     }
 
     @Test
-    @DisplayName("Não deve retornar erro quando encontrado empresa por id durante a exclusão")
-    public void shouldNotReturnErrorWhenFoundCompanyByIdInRegistryDelete() {
+    @DisplayName("Não deve retornar erro quando encontrado transportadora por id durante a exclusão")
+    public void shouldNotReturnErrorWhenFoundShippingCompanyByIdInRegistryDelete() {
         final Long id = 1l;
         final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity(id).getShippingCompanyEntity();
         final Optional<ShippingCompanyEntity> optionalShippingCompanyEntity = Optional.of(shippingCompanyEntity);

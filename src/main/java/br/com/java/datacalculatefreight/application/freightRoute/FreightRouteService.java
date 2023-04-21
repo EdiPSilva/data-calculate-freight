@@ -101,7 +101,7 @@ public class FreightRouteService {
     private void compareIds(final Long idFound, final Long idReceived, final MessageCodeEnum messageCodeEnum, final String postalCode) {
         if (idReceived != null) {
             if (idFound != null && !idFound.equals(idReceived)) {
-                throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum, postalCode));
+                throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum, postalCode));//TODO - trocar a mensagem de erro
             }
         } else if (idFound != null) {
             throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum, postalCode));

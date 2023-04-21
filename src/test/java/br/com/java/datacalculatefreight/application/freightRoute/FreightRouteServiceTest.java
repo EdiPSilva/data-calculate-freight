@@ -6,11 +6,12 @@ import br.com.java.datacalculatefreight.application.freightRoute.persistence.Fre
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.FreightRouteRepository;
 import br.com.java.datacalculatefreight.application.freightRoute.resources.FreightRouteRequest;
 import br.com.java.datacalculatefreight.application.freightRoute.resources.FreightRouteResponse;
-import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
 import br.com.java.datacalculatefreight.pageable.GenericPageable;
+import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
+import br.com.java.datacalculatefreight.utils.StatusMessageEnum;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -115,5 +115,101 @@ public class FreightRouteServiceTest {
         final boolean equals = true;
         final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest(equals).getFreightRouteRequest();
         assertThrows(CustomException.class, () -> freightRouteService.create(freightRouteRequest), "Os CEPs inicial e final não podem ser iguais");
+    }
+
+    @Test
+    @DisplayName("Não deve retornar erro quando os CEPs não existirem")
+    public void shouldNotReturnErrorWhenThePostalCodesNotExists() {
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntityByFreightRouteRequest(freightRouteRequest).getFreightRouteEntity();
+        freightRouteEntity.setId(1L);
+        final Long existingId = null;
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(existingId);
+        when(freightRouteRepository.save(Mockito.any())).thenReturn(freightRouteEntity);
+        compare(freightRouteRequest, assertDoesNotThrow(() -> freightRouteService.create(freightRouteRequest)));
+    }
+
+    private void compare(final FreightRouteRequest freightRouteRequest, final FreightRouteResponse freightRouteResponse) {
+        assertNotNull(freightRouteRequest);
+        assertNotNull(freightRouteResponse);
+        assertNotNull(freightRouteResponse.getId());
+        assertEquals(freightRouteRequest.getStartPostalCode(), freightRouteResponse.getStartPostalCode());
+        assertEquals(freightRouteRequest.getEndPostalCode(), freightRouteResponse.getEndPostalCode());
+        assertEquals(freightRouteRequest.getDeliveryDays(), freightRouteResponse.getDeliveryDays());
+        assertEquals(freightRouteRequest.getDevolutionDays(), freightRouteResponse.getDevolutionDays());
+        assertEquals(freightRouteRequest.getActive(), freightRouteResponse.getActive());
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro quando o CEP estiver vinculado a outra rota de frete")
+    public void shouldReturnErrorWhenThePostalCodeIsLinckedToAnotherFreightRoute() {
+        final Long id = 1L;
+        final Long existingId = 2L;
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(null);
+        assertThrows(CustomException.class, () -> freightRouteService.update(id, freightRouteRequest));
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(null);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(existingId);
+        assertThrows(CustomException.class, () -> freightRouteService.update(id, freightRouteRequest));
+    }
+
+    @Test
+    @DisplayName("Não deve retornar erro quanto os CEPs for válido")
+    public void shouldNotReturnErrorWhenThePostalCodesWasValid() {
+        final Long id = 1L;
+        final Long existingId = 1L;
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntityByFreightRouteRequest(freightRouteRequest).getFreightRouteEntity();
+        freightRouteEntity.setId(id);
+        final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.of(freightRouteEntity);
+
+        when(freightRouteRepository.findById(id)).thenReturn(optionalFreightRouteEntity);
+        when(freightRouteRepository.save(Mockito.any())).thenReturn(freightRouteEntity);
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(null);
+        compare(freightRouteRequest, assertDoesNotThrow(() -> freightRouteService.update(id, freightRouteRequest)));
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(null);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(existingId);
+        compare(freightRouteRequest, assertDoesNotThrow(() -> freightRouteService.update(id, freightRouteRequest)));
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(existingId);
+        compare(freightRouteRequest, assertDoesNotThrow(() -> freightRouteService.update(id, freightRouteRequest)));
+
+        when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(null);
+        when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(null);
+        compare(freightRouteRequest, assertDoesNotThrow(() -> freightRouteService.update(id, freightRouteRequest)));
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro quando não encontrado rota de frete por id durante a exclusão")
+    public void shouldReturnErrorWhenNotFoundFreightRouteByIdInRegistryDelete() {
+        final Long id = 1L;
+        final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.empty();
+        when(freightRouteRepository.findById(id)).thenReturn(optionalFreightRouteEntity);
+        assertThrows(CustomException.class, () -> freightRouteService.delete(id));
+    }
+
+    @Test
+    @DisplayName("Não deve retornar erro quando encontrado rota de frete por id durante a exclusão")
+    public void shouldNotReturnErrorWhenFoundFreightRouteByIdInRegistryDelete() {
+        final Long id = 1L;
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(id).getFreightRouteEntity();
+        final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.of(freightRouteEntity);
+        when(freightRouteRepository.findById(id)).thenReturn(optionalFreightRouteEntity);
+
+        final DefaultResponse defaultResponse = assertDoesNotThrow(() -> freightRouteService.delete(id));
+        assertNotNull(defaultResponse);
+        assertNotNull(defaultResponse.getObject());
+        assertEquals(StatusMessageEnum.SUCCESS.getValue(), defaultResponse.getStatus());
+
+        final FreightRouteResponse freightRouteResponse = (FreightRouteResponse) defaultResponse.getObject();
+        compare(freightRouteEntity, freightRouteResponse);
     }
 }
