@@ -1,6 +1,5 @@
 package br.com.java.datacalculatefreight.application.shippingCompany;
 
-import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
 import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyRepository;
 import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
@@ -51,7 +50,7 @@ public class ShippingCompanyService {
     }
 
     public Page<ShippingCompanyResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
-        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, ShippingCompanyEntity.class, sortBy, sortDirection));
         return new PageImpl<>(shippingCompanyRepository.findAll(pageable).stream().map(shippingCompanyEntity -> ShippingCompanyResponse.from(shippingCompanyEntity)).collect(Collectors.toList()));
     }
 

@@ -1,8 +1,5 @@
 package br.com.java.datacalculatefreight.application.typeDelivery;
 
-import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
-import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
-import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import br.com.java.datacalculatefreight.application.typeDelivery.persistence.TypeDeliveryEntity;
 import br.com.java.datacalculatefreight.application.typeDelivery.persistence.TypeDeliveryRepository;
 import br.com.java.datacalculatefreight.application.typeDelivery.resources.TypeDeliveryRequest;
@@ -65,7 +62,7 @@ public class TypeDeliveryService {
     }
 
     public Page<TypeDeliveryResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
-        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, TypeDeliveryEntity.class, sortBy, sortDirection));
         return new PageImpl<>(typeDeliveryRepository.findAll(pageable).stream().map(typeDeliveryEntity -> TypeDeliveryResponse.from(typeDeliveryEntity)).collect(Collectors.toList()));
     }
 

@@ -1,11 +1,9 @@
 package br.com.java.datacalculatefreight.application.freightRoute;
 
-import br.com.java.datacalculatefreight.application.countryStates.persistence.CountryStatesEntity;
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.FreightRouteEntity;
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.FreightRouteRepository;
 import br.com.java.datacalculatefreight.application.freightRoute.resources.FreightRouteRequest;
 import br.com.java.datacalculatefreight.application.freightRoute.resources.FreightRouteResponse;
-import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;
 import br.com.java.datacalculatefreight.configuration.MessageConfiguration;
 import br.com.java.datacalculatefreight.exceptions.CustomException;
@@ -70,7 +68,7 @@ public class FreightRouteService {
     }
 
     public Page<FreightRouteResponse> getAll(Integer page, Integer size, String sortBy, String sortDirection) {
-        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, CountryStatesEntity.class, sortBy, sortDirection));
+        final Pageable pageable = genericPageable.buildPageable(new PageableDto(page, size, FreightRouteEntity.class, sortBy, sortDirection));
         return new PageImpl<>(freightRouteRepository.findAll(pageable).stream().map(FreightRouteResponse::from).collect(Collectors.toList()));
     }
 
