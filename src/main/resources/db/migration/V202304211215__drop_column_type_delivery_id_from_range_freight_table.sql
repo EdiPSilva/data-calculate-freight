@@ -1,0 +1,1 @@
+alter table range_freight drop column type_delivery_id;
