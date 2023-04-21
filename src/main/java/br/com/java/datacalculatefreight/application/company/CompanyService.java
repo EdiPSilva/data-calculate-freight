@@ -44,7 +44,7 @@ public class CompanyService {
         genericValidations.cnpjIsValid(document);
         final CompanyEntity companyEntity = companyRepository.findByDocument(document);
         if (companyEntity == null) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(empresa)"), HttpStatus.NOT_FOUND);
         }
         return CompanyResponse.from(companyEntity);
     }
@@ -84,7 +84,7 @@ public class CompanyService {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<CompanyEntity> optionalCompanyEntity = companyRepository.findById(id);
         if (optionalCompanyEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(empresa)"), HttpStatus.NOT_FOUND);
         }
         return optionalCompanyEntity.get();
     }

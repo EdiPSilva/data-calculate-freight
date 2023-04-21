@@ -46,7 +46,7 @@ public class FreightRouteService {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<FreightRouteEntity> optionalFreightRouteEntity = freightRouteRepository.findById(id);
         if (optionalFreightRouteEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(rota de frete)"), HttpStatus.NOT_FOUND);
         }
         return optionalFreightRouteEntity.get();
     }
@@ -55,7 +55,7 @@ public class FreightRouteService {
         genericValidations.validatePostCode(postalCode, MessageCodeEnum.INVALID_POST_CODE);
         final FreightRouteEntity freightRouteEntity = getPostalCodeByColumn(postalCode, column);
         if (freightRouteEntity == null) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(rota de frete)"), HttpStatus.NOT_FOUND);
         }
         return FreightRouteResponse.from(freightRouteEntity);
     }

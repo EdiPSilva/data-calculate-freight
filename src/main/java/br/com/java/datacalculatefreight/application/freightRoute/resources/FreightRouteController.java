@@ -24,7 +24,7 @@ public class FreightRouteController {
     @Autowired
     FreightRouteService freightRouteService;
 
-    private static final String API_V1 = "/shipping-company/v1/";
+    private static final String API_V1 = "/freight-route/v1/";
     private static final String START_POSTAL_CODE = "start";
     private static final String END_POSTAL_CODE = "end";
 

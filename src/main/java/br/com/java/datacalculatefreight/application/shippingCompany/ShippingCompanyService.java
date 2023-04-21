@@ -44,7 +44,7 @@ public class ShippingCompanyService {
         genericValidations.cnpjIsValid(document);
         final ShippingCompanyEntity shippingCompanyEntity = shippingCompanyRepository.findByDocument(document);
         if (shippingCompanyEntity == null) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(transportadora)"), HttpStatus.NOT_FOUND);
         }
         return ShippingCompanyResponse.from(shippingCompanyEntity);
     }
@@ -79,11 +79,11 @@ public class ShippingCompanyService {
         return ShippingCompanyResponse.from(shippingCompanyEntity);
     }
 
-    private ShippingCompanyEntity getShippingCompanyById(Long id) {
+    public ShippingCompanyEntity getShippingCompanyById(Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<ShippingCompanyEntity> optionalShippingCompanyEntity = shippingCompanyRepository.findById(id);
         if (optionalShippingCompanyEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(transportadora)"), HttpStatus.NOT_FOUND);
         }
         return optionalShippingCompanyEntity.get();
     }

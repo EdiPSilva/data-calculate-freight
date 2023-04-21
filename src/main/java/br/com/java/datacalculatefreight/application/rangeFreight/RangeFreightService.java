@@ -51,7 +51,7 @@ public class RangeFreightService {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = rangeFreightRepository.findById(id);
         if (optionalRangeFreightEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(range de frete)"), HttpStatus.NOT_FOUND);
         }
         return optionalRangeFreightEntity.get();
     }

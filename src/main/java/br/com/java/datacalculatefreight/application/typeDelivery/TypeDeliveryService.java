@@ -44,7 +44,7 @@ public class TypeDeliveryService {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<TypeDeliveryEntity> optionalTypeDeliveryEntity = typeDeliveryRepository.findById(id);
         if (optionalTypeDeliveryEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(tipo de entrega)"), HttpStatus.NOT_FOUND);
         }
         return optionalTypeDeliveryEntity.get();
     }
@@ -52,7 +52,7 @@ public class TypeDeliveryService {
     public TypeDeliveryResponse getByType(String type) {
         final TypeDeliveryEntity typeDeliveryEntity = typeDeliveryRepository.findByType(formatType(type));
         if (typeDeliveryEntity == null) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(tipo de entrega)"), HttpStatus.NOT_FOUND);
         }
         return TypeDeliveryResponse.from(typeDeliveryEntity);
     }

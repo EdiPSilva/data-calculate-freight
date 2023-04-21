@@ -42,7 +42,7 @@ public class CalculationFreightService {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<CalculationFreightEntity> optionalCalculationFreightEntity = calculationFreightRepository.findById(id);
         if (optionalCalculationFreightEntity.isEmpty()) {
-            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND), HttpStatus.NOT_FOUND);
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.REGISTER_NOT_FOUND, "(cálculo de frete)"), HttpStatus.NOT_FOUND);
         }
         return optionalCalculationFreightEntity.get();
     }
