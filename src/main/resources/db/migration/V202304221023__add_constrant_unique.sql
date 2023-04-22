@@ -1,0 +1,1 @@
+alter table calculation_type_range_freight add constraint calculation_type_range_freight_unique unique (calculation_type, range_freight_id, freight_route_id, type_delivery_id);
