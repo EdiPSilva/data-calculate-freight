@@ -20,7 +20,7 @@ spring:
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
-        show_sql: true
+        show_sql: false
         jdbc:
           lob:
             non_contextual_creation: true
