@@ -1,0 +1,2 @@
+alter table calculation_freight drop constraint shipping_company_id_in_calculation_shipping_fk;
+alter table calculation_freight drop column shipping_company_id;

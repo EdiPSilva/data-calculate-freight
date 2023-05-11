@@ -47,6 +47,7 @@ public class RangeFreightService {
         return RangeFreightResponse.from(getRangeFreightById(id));
     }
 
+    //TODO - o valor inicial não pode ser menor que o valor final
     public RangeFreightEntity getRangeFreightById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = rangeFreightRepository.findById(id);

@@ -1,0 +1,1 @@
+alter table calculation_freight add column delivery_day timestamp;

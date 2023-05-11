@@ -1,0 +1,1 @@
+alter table calculation_freight drop column sender_postal_code;

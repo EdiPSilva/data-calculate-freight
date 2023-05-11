@@ -1,0 +1,2 @@
+alter table calculation_freight add column range_freight_id integer;
+alter table calculation_freight add constraint range_freight_id_in_calculation_freight_fk foreign key (range_freight_id) references range_freight (id);

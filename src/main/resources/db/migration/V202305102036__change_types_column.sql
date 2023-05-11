@@ -1,0 +1,10 @@
+alter table calculation_freight alter column width type numeric(8,2);
+alter table calculation_freight alter column height type numeric(8,2);
+alter table calculation_freight alter column length type numeric(8,2);
+alter table calculation_freight alter column cubage type numeric(8,2);
+alter table calculation_freight alter column weight type numeric(8,2);
+alter table calculation_freight alter column freight_value type numeric(8,2);
+alter table range_freight alter column start_value type numeric(8,2);
+alter table range_freight alter column end_value type numeric(8,2);
+alter table range_freight alter column freight_value type numeric(8,2);
+alter table range_freight alter column surplus_value type numeric(8,2);
