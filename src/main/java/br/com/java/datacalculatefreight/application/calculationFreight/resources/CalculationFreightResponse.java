@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CalculationFreightResponse {
 
-    public CalculationFreightResponse(CalculationFreightEntity calculationFreightEntity) {
+    public CalculationFreightResponse(final CalculationFreightEntity calculationFreightEntity) {
         this.id = calculationFreightEntity.getId();
-        this.senderPostalCode = calculationFreightEntity.getSenderPostalCode();
         this.destinyPostalCode = calculationFreightEntity.getDestinyPostalCode();
         this.width = calculationFreightEntity.getWidth();
         this.height = calculationFreightEntity.getHeight();
@@ -26,38 +25,25 @@ public class CalculationFreightResponse {
         this.freightValue = calculationFreightEntity.getFreightValue();
         this.dateCreate = calculationFreightEntity.getDateCreate();
         this.dateUpdate = calculationFreightEntity.getDateUpdate();
-        setShippingCompanyResponse(calculationFreightEntity.getShippingCompanyEntity());
-    }
-
-    private void setShippingCompanyResponse(ShippingCompanyEntity shippingCompanyEntity) {
-        if (shippingCompanyEntity != null) {
-            this.shippingCompany = ShippingCompanyResponse.from(shippingCompanyEntity);
-        }
     }
 
     @ApiModelProperty(notes = "Id do cálculo de frete", example = "1", required = true)
     private Long id;
 
-    @ApiModelProperty(notes = "Transportadora do frete", example = "1", required = false)
-    private ShippingCompanyResponse shippingCompany;
-
-    @ApiModelProperty(notes = "Remetente cep", example = "1", required = true)
-    private String senderPostalCode;
-
     @ApiModelProperty(notes = "Destino cep", example = "1", required = true)
     private String destinyPostalCode;
 
     @ApiModelProperty(notes = "Largura", example = "1", required = true)
-    private Long width;
+    private Double width;
 
     @ApiModelProperty(notes = "Altura", example = "1", required = true)
-    private Long height;
+    private Double height;
 
     @ApiModelProperty(notes = "Comprimento", example = "1", required = true)
-    private Long length;
+    private Double length;
 
     @ApiModelProperty(notes = "Cubagem", example = "1", required = true)
-    private Long cubage;
+    private Double cubage;
 
     @ApiModelProperty(notes = "Peso", example = "1", required = true)
     private Double weight;

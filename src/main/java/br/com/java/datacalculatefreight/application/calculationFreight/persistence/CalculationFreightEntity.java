@@ -1,12 +1,14 @@
 package br.com.java.datacalculatefreight.application.calculationFreight.persistence;
 
-import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
+import br.com.java.datacalculatefreight.application.company.persistence.CompanyEntity;
+import br.com.java.datacalculatefreight.application.rangeFreight.persistence.RangeFreightEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,26 +25,30 @@ public class CalculationFreightEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shipping_company_id")
-    private ShippingCompanyEntity shippingCompanyEntity;
+    @JoinColumn(name = "company_id")
+    private CompanyEntity companyEntity;
 
-    @Column(name = "sender_postal_code")
-    private String senderPostalCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "range_freight_id")
+    private RangeFreightEntity rangeFreightEntity;
+
+    @Column(name = "delivery_day")
+    private LocalDate delivaryDay;
 
     @Column(name = "destiny_postal_code")
     private String destinyPostalCode;
 
     @Column(name = "width")
-    private Long width;
+    private Double width;
 
     @Column(name = "height")
-    private Long height;
+    private Double height;
 
     @Column(name = "length")
-    private Long length;
+    private Double length;
 
     @Column(name = "cubage")
-    private Long cubage;
+    private Double cubage;
 
     @Column(name = "weight")
     private Double weight;

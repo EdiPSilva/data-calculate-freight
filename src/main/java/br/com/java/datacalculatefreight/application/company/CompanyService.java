@@ -80,7 +80,7 @@ public class CompanyService {
         return CompanyResponse.from(companyEntity);
     }
 
-    private CompanyEntity getCompanyEntityById(final Long id) {
+    public CompanyEntity getCompanyEntityById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<CompanyEntity> optionalCompanyEntity = companyRepository.findById(id);
         if (optionalCompanyEntity.isEmpty()) {

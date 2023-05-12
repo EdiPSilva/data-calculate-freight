@@ -62,7 +62,6 @@ public class CalculationFreightServiceTest {
         assertNotNull(calculationFreightEntity);
         assertNotNull(calculationFreightResponse);
         assertEquals(calculationFreightEntity.getId(), calculationFreightResponse.getId());
-        assertEquals(calculationFreightEntity.getSenderPostalCode(), calculationFreightResponse.getSenderPostalCode());
         assertEquals(calculationFreightEntity.getDestinyPostalCode(), calculationFreightResponse.getDestinyPostalCode());
         assertEquals(calculationFreightEntity.getWidth(), calculationFreightResponse.getWidth());
         assertEquals(calculationFreightEntity.getHeight(), calculationFreightResponse.getHeight());
