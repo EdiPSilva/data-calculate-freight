@@ -18,7 +18,10 @@ public enum MessageCodeEnum {
     END_POSTAL_CODE_ALREADY_CADASTRE("end.postal.code.already.cadastre"),
     START_AND_END_POSTAL_CODE_EQUALS("start.and.end.postal.code.equals"),
     INVALID_CALCULATION_TYPE("invalid.calculation.type"),
-    CALCULATION_TYPE_NOT_FOUND("calculation.type.not.found");
+    CALCULATION_TYPE_NOT_FOUND("calculation.type.not.found"),
+    POSTAL_CODE_IN_USE("postal.code.in.use"),
+    END_VALUE_IS_GREATER_THAT_INITIAL_VALUE("end.value.is.greater.than.initial.value"),
+    FREIGHT_ROUTE_IN_USE("freight.route.in.use");
 
     private String value;
 

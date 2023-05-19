@@ -12,6 +12,7 @@ import br.com.java.datacalculatefreight.pageable.PageableDto;
 import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import br.com.java.datacalculatefreight.utils.GenericValidations;
 import br.com.java.datacalculatefreight.utils.StatusMessageEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class FreightRouteService {
 
@@ -99,7 +101,7 @@ public class FreightRouteService {
     private void compareIds(final Long idFound, final Long idReceived, final MessageCodeEnum messageCodeEnum, final String postalCode) {
         if (idReceived != null) {
             if (idFound != null && !idFound.equals(idReceived)) {
-                throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum, postalCode));//TODO - trocar a mensagem de erro
+                throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.POSTAL_CODE_IN_USE, postalCode));
             }
         } else if (idFound != null) {
             throw new CustomException(messageConfiguration.getMessageByCode(messageCodeEnum, postalCode));
@@ -120,14 +122,26 @@ public class FreightRouteService {
         return FreightRouteResponse.from(freightRouteRepository.save(freightRouteEntity));
     }
 
-    public DefaultResponse delete(Long id) {//TODO - validar quando já houver algum registro associado
+    public DefaultResponse delete(Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final FreightRouteEntity freightRouteEntity = getFreightRouteById(id);
         final DefaultResponse defaultResponse = DefaultResponse.builder()
                 .status(StatusMessageEnum.SUCCESS.getValue())
                 .object(FreightRouteResponse.from(freightRouteEntity))
                 .build();
-        freightRouteRepository.delete(freightRouteEntity);
+        delete(freightRouteEntity);
         return defaultResponse;
+    }
+
+    private void delete(final FreightRouteEntity freightRouteEntity) {
+        try {
+            freightRouteRepository.delete(freightRouteEntity);
+        } catch (RuntimeException exception) {
+            if (exception.getMessage().contains("ConstraintViolationException")) {
+                log.error(exception.getMessage());
+                throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.FREIGHT_ROUTE_IN_USE));
+            }
+            throw exception;
+        }
     }
 }

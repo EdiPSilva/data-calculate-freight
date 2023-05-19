@@ -47,7 +47,6 @@ public class RangeFreightService {
         return RangeFreightResponse.from(getRangeFreightById(id));
     }
 
-    //TODO - o valor inicial não pode ser menor que o valor final
     public RangeFreightEntity getRangeFreightById(final Long id) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = rangeFreightRepository.findById(id);
@@ -64,6 +63,7 @@ public class RangeFreightService {
 
     public RangeFreightResponse create(final RangeFreightRequest rangeFreightRequest) {
         final ShippingCompanyEntity shippingCompanyEntity = shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId());
+        validateEndValueGreaterStarValue(rangeFreightRequest.getStartValue(), rangeFreightRequest.getEndValue());
         final RangeFreightEntity rangeFreightEntity = rangeFreightRequest.to(shippingCompanyEntity);
         rangeFreightEntity.setDateCreate(LocalDateTime.now());
         return RangeFreightResponse.from(rangeFreightRepository.save(rangeFreightEntity));
@@ -71,6 +71,7 @@ public class RangeFreightService {
 
     public RangeFreightResponse update(Long id, RangeFreightRequest rangeFreightRequest) {
         genericValidations.validatevalidateNumberGreaterThanZero(id, MessageCodeEnum.INVALID_ID);
+        validateEndValueGreaterStarValue(rangeFreightRequest.getStartValue(), rangeFreightRequest.getEndValue());
         final ShippingCompanyEntity shippingCompanyEntity = shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId());
         final RangeFreightEntity rangeFreightEntity = getRangeFreightById(id);
         rangeFreightEntity.setShippingCompanyEntity(shippingCompanyEntity);
@@ -92,5 +93,11 @@ public class RangeFreightService {
                 .build();
         rangeFreightRepository.delete(rangeFreightEntity);
         return defaultResponse;
+    }
+
+    private void validateEndValueGreaterStarValue(final Double startValue, final Double endValue) {
+        if(startValue > endValue) {
+            throw new CustomException(messageConfiguration.getMessageByCode(MessageCodeEnum.END_VALUE_IS_GREATER_THAT_INITIAL_VALUE), HttpStatus.NOT_FOUND);
+        }
     }
 }

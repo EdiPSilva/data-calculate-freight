@@ -85,9 +85,18 @@ public class RangeFreightServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar erro quando o valor inicial for maior que o valor final")
+    public void shouldReturnErrorWhenStartValueGreaterEndValue() {
+        final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance(2.0, 1.0).getRangeFreightRequest();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
+        when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);
+        assertThrows(CustomException.class, () -> rangeFreightService.create(rangeFreightRequest));
+    }
+
+    @Test
     @DisplayName("Não deve retornar erro quando a transportadora for encontrada")
     public void shouldNotReturnErrorWhenShippingCompanyWasFound() {
-        final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getBasicRangeFreightRequest().getRangeFreightRequest();
+        final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance().getRangeFreightRequest();
         final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
         final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntityByRangeFreightRequest(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
         when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);
@@ -112,7 +121,7 @@ public class RangeFreightServiceTest {
     @DisplayName("Não deve retornar erro quando a transportadora for encontrada durante a atualização")
     public void shouldNotReturnErrorWhenShippingCompanyWasFoundInRegistryUpdate() {
         final Long id = 1L;
-        final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getBasicRangeFreightRequest().getRangeFreightRequest();
+        final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance().getRangeFreightRequest();
         final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
         final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntityByRangeFreightRequest(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
         when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);

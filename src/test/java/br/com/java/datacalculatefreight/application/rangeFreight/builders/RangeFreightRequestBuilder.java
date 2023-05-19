@@ -10,12 +10,16 @@ public class RangeFreightRequestBuilder {
 
     }
 
-    public static RangeFreightRequestBuilder getBasicRangeFreightRequest() {
+    public static RangeFreightRequestBuilder getInstance() {
+        return getInstance(1.0, 1.0);
+    }
+
+    public static RangeFreightRequestBuilder getInstance(final Double startValue, final Double endValue) {
         final RangeFreightRequestBuilder builder = new RangeFreightRequestBuilder();
         builder.rangeFreightRequest = RangeFreightRequest.builder()
                 .shippingCompanyId(1L)
-                .startValue(1.0)
-                .endValue(1.0)
+                .startValue(startValue)
+                .endValue(endValue)
                 .freightValue(1.0)
                 .surplusValue(1.0)
                 .active(true)
