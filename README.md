@@ -18,3 +18,7 @@ Após o banco postgres subir corretamente configure a IDE de sua preferência pa
 ```
 src.main.java.br.com.java.datacalculatefreight.DataCalculateFreightApplication
 ```
+A aplicação roda na porta `8080`, então para acessar a documentação do **Swagger** basta utilizar da url
+```
+http://localhost:8080/swagger-ui.html
+```
