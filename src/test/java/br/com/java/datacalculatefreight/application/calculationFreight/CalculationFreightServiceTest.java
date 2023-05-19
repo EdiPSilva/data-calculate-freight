@@ -40,8 +40,8 @@ public class CalculationFreightServiceTest {
     CalculationFreightRepository calculationFreightRepository;
 
     @Test
-    @DisplayName("Deve retornar erro quando não for localizado a empresa por id")
-    public void shouldReturnErrorWhenNotFoundCompanyById(){
+    @DisplayName("Deve retornar erro quando não for localizado o registro")
+    public void shouldReturnErrorWhenNotFoundTheRegistry(){
         final Long id = 1l;
         final Optional<CalculationFreightEntity> optionalCalculationFreightEntity = Optional.empty();
         when(calculationFreightRepository.findById(id)).thenReturn(optionalCalculationFreightEntity);
@@ -52,7 +52,7 @@ public class CalculationFreightServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErrorWhatTheRegistryWasFound() {
         final Long id = 1l;
-        final CalculationFreightEntity calculationFreightEntity = CalculationFreightEntityBuilder.getBasicCalculationFreightEntity(id).getCalculationFreightEntity();
+        final CalculationFreightEntity calculationFreightEntity = CalculationFreightEntityBuilder.getInstance(id).getCalculationFreightEntity();
         final Optional<CalculationFreightEntity> optionalCalculationFreightEntity = Optional.of(calculationFreightEntity);
         when(calculationFreightRepository.findById(id)).thenReturn(optionalCalculationFreightEntity);
         compare(calculationFreightEntity, assertDoesNotThrow(() -> calculationFreightService.getById(id)));

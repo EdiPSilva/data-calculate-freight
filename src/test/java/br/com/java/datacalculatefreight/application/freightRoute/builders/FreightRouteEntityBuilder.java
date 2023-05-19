@@ -13,11 +13,11 @@ public class FreightRouteEntityBuilder {
 
     }
 
-    public static FreightRouteEntityBuilder getBasicFreightRouteEntity() {
-        return getBasicFreightRouteEntity(1L);
+    public static FreightRouteEntityBuilder getInstance() {
+        return getInstance(1L);
     }
 
-    public static FreightRouteEntityBuilder getBasicFreightRouteEntity(final Long id) {
+    public static FreightRouteEntityBuilder getInstance(final Long id) {
         final FreightRouteEntityBuilder builder = new FreightRouteEntityBuilder();
         builder.freightRouteEntity = FreightRouteEntity.builder()
                 .id(id)
@@ -32,7 +32,7 @@ public class FreightRouteEntityBuilder {
         return builder;
     }
 
-    public static FreightRouteEntityBuilder getBasicFreightRouteEntityByFreightRouteRequest(final FreightRouteRequest freightRouteRequest) {
+    public static FreightRouteEntityBuilder getInstance(final FreightRouteRequest freightRouteRequest) {
         final FreightRouteEntityBuilder builder = new FreightRouteEntityBuilder();
         builder.freightRouteEntity = freightRouteRequest.to();
         builder.freightRouteEntity.setDateCreate(Fuctions.getCreateDate());

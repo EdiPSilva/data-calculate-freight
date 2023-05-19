@@ -14,11 +14,11 @@ public class CompanyEntityBuilder {
 
     }
 
-    public static CompanyEntityBuilder getBasicCompanyEntity() {
-        return getBasicCompanyEntity(1l);
+    public static CompanyEntityBuilder getInstance() {
+        return getInstance(1l);
     }
 
-    public static CompanyEntityBuilder getBasicCompanyEntity(final Long id) {
+    public static CompanyEntityBuilder getInstance(final Long id) {
         final CompanyEntityBuilder builder = new CompanyEntityBuilder();
         builder.companyEntity = CompanyEntity.builder()
                 .id(id)
@@ -31,7 +31,7 @@ public class CompanyEntityBuilder {
         return builder;
     }
 
-    public static CompanyEntityBuilder getCompanyEntityByCompanyRequest(final CompanyRequest companyRequest) {
+    public static CompanyEntityBuilder getInstance(final CompanyRequest companyRequest) {
         final CompanyEntityBuilder builder = new CompanyEntityBuilder();
         builder.companyEntity = companyRequest.to();
         builder.companyEntity.setDateCreate(LocalDateTime.now());

@@ -53,7 +53,7 @@ public class ShippingCompanyServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErrorWhatTheRegistryWasFound() {
         final Long id = 1l;
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity(id).getShippingCompanyEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance(id).getShippingCompanyEntity();
         final Optional<ShippingCompanyEntity> optionalShippingCompanyEntity = Optional.of(shippingCompanyEntity);
         when(shippingCompanyRepository.findById(id)).thenReturn(optionalShippingCompanyEntity);
         compare(shippingCompanyEntity, assertDoesNotThrow(() -> shippingCompanyService.getById(id)));
@@ -82,7 +82,7 @@ public class ShippingCompanyServiceTest {
     @DisplayName("Não deve retornar erro quando localizado transportadora por documento")
     public void shouldNotReturnErrorWhenLocatedShippingCompanyByDocument() {
         final String document = "88449952000138";
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance().getShippingCompanyEntity();
         when(shippingCompanyRepository.findByDocument(document)).thenReturn(shippingCompanyEntity);
         compare(shippingCompanyEntity, assertDoesNotThrow(() -> shippingCompanyService.getByDocument(document)));
     }
@@ -90,7 +90,7 @@ public class ShippingCompanyServiceTest {
     @Test
     @DisplayName("Deve retornar erro quando documento já existir")
     public void shouldReturnErrorWhenDocumentAlreadyExists() {
-        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getBasicShippingCompanyRequest().getShippingCompanyRequest();
+        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getInstance().getShippingCompanyRequest();
         final Long existingId = 1l;
         when(shippingCompanyRepository.findShippingCompanyEntityByDocument(shippingCompanyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> shippingCompanyService.create(shippingCompanyRequest));
@@ -99,8 +99,8 @@ public class ShippingCompanyServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando documento não existir")
     public void shouldNotReturnErrorWhenDocumentNotExists() {
-        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getBasicShippingCompanyRequest().getShippingCompanyRequest();
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getShippingCompanyEntityByShippingCompanyRequest(shippingCompanyRequest).getShippingCompanyEntity();
+        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getInstance().getShippingCompanyRequest();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance(shippingCompanyRequest).getShippingCompanyEntity();
         shippingCompanyEntity.setId(1l);
         final Long existingId = null;
         when(shippingCompanyRepository.findShippingCompanyEntityByDocument(shippingCompanyRequest.getDocument())).thenReturn(existingId);
@@ -122,7 +122,7 @@ public class ShippingCompanyServiceTest {
     @DisplayName("Deve retornar erro quando não encontrado transportadora por documento durante a atualização")
     public void shouldReturnErrorWhenNotFoundShippingCompanyByDocumentInRegistryUpdate() {
         final Long id = 1l;
-        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getBasicShippingCompanyRequest().getShippingCompanyRequest();
+        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getInstance().getShippingCompanyRequest();
         final Long existingId = null;
         when(shippingCompanyRepository.findShippingCompanyEntityByDocument(shippingCompanyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> shippingCompanyService.update(id, shippingCompanyRequest));
@@ -132,7 +132,7 @@ public class ShippingCompanyServiceTest {
     @DisplayName("Deve retornar erro quando encontrado transportadora por documento com outro id durante a atualização")
     public void shouldReturnErrorWhenFoundShippingCompanyByDocumentWithOtherIdInRegistryUpdate() {
         final Long id = 1l;
-        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getBasicShippingCompanyRequest().getShippingCompanyRequest();
+        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getInstance().getShippingCompanyRequest();
         final Long existingId = 2l;
         when(shippingCompanyRepository.findShippingCompanyEntityByDocument(shippingCompanyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> shippingCompanyService.update(id, shippingCompanyRequest));
@@ -141,13 +141,13 @@ public class ShippingCompanyServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando encontrado transportadora por documento durante a atualização")
     public void shouldNotReturnErrorWhenFoundShippingCompanyByDocumentInRegistryUpdate() {
-        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getBasicShippingCompanyRequest().getShippingCompanyRequest();
+        final ShippingCompanyRequest shippingCompanyRequest = ShippingCompanyRequestBuilder.getInstance().getShippingCompanyRequest();
 
         final Long id = 1l;
         final Long existingId = id;
         when(shippingCompanyRepository.findShippingCompanyEntityByDocument(shippingCompanyRequest.getDocument())).thenReturn(existingId);
 
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getShippingCompanyEntityByShippingCompanyRequest(shippingCompanyRequest).getShippingCompanyEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance(shippingCompanyRequest).getShippingCompanyEntity();
         shippingCompanyEntity.setId(1l);
         final Optional<ShippingCompanyEntity> optionalShippingCompanyEntity = Optional.of(shippingCompanyEntity);
         when(shippingCompanyRepository.findById(id)).thenReturn(optionalShippingCompanyEntity);
@@ -169,7 +169,7 @@ public class ShippingCompanyServiceTest {
     @DisplayName("Não deve retornar erro quando encontrado transportadora por id durante a exclusão")
     public void shouldNotReturnErrorWhenFoundShippingCompanyByIdInRegistryDelete() {
         final Long id = 1l;
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity(id).getShippingCompanyEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance(id).getShippingCompanyEntity();
         final Optional<ShippingCompanyEntity> optionalShippingCompanyEntity = Optional.of(shippingCompanyEntity);
         when(shippingCompanyRepository.findById(id)).thenReturn(optionalShippingCompanyEntity);
 

@@ -2,7 +2,6 @@ package br.com.java.datacalculatefreight.application.calculationFreight.resource
 
 import br.com.java.datacalculatefreight.application.calculationFreight.CalculationFreightService;
 import br.com.java.datacalculatefreight.utils.DefaultLog;
-import br.com.java.datacalculatefreight.utils.DefaultResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;

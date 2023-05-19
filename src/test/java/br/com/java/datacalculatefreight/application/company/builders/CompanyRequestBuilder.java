@@ -10,7 +10,7 @@ public class CompanyRequestBuilder {
 
     }
 
-    public static CompanyRequestBuilder getBasicCompanyRequest() {
+    public static CompanyRequestBuilder getInstance() {
         final CompanyRequestBuilder builder = new CompanyRequestBuilder();
         builder.companyRequest = CompanyRequest.builder()
                 .name("Melissa e Renato Financeira ME")

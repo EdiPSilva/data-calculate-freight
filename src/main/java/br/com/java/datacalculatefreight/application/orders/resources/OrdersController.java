@@ -1,6 +1,5 @@
 package br.com.java.datacalculatefreight.application.orders.resources;
 
-import br.com.java.datacalculatefreight.application.company.resources.CompanyResponse;
 import br.com.java.datacalculatefreight.application.orders.OrdersService;
 import br.com.java.datacalculatefreight.utils.DefaultLog;
 import io.swagger.annotations.ApiOperation;

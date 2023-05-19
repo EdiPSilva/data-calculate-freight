@@ -52,7 +52,7 @@ public class CompanyServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErrorWhatTheRegistryWasFound() {
         final Long id = 1l;
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity(id).getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance(id).getCompanyEntity();
         final Optional<CompanyEntity> optionalCompanyEntity = Optional.of(companyEntity);
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
         compare(companyEntity, assertDoesNotThrow(() -> companyService.getById(id)));
@@ -82,7 +82,7 @@ public class CompanyServiceTest {
     @DisplayName("Não deve retornar erro quando localizado empresa por documento")
     public void shouldNotReturnErrorWhenLocatedCompanyByDocument() {
         final String document = "33662514000161";
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity().getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance().getCompanyEntity();
         when(companyRepository.findByDocument(document)).thenReturn(companyEntity);
         compare(companyEntity, assertDoesNotThrow(() -> companyService.getByDocument(document)));
     }
@@ -90,7 +90,7 @@ public class CompanyServiceTest {
     @Test
     @DisplayName("Deve retornar erro quando documento já existir")
     public void shouldReturnErrorWhenDocumentAlreadyExists() {
-        final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
+        final CompanyRequest companyRequest = CompanyRequestBuilder.getInstance().getCompanyRequest();
         final Long existingId = 1l;
         when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.create(companyRequest));
@@ -99,8 +99,8 @@ public class CompanyServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando documento não existir")
     public void shouldNotReturnErrorWhenDocumentNotExists() {
-        final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getCompanyEntityByCompanyRequest(companyRequest).getCompanyEntity();
+        final CompanyRequest companyRequest = CompanyRequestBuilder.getInstance().getCompanyRequest();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance(companyRequest).getCompanyEntity();
         companyEntity.setId(1l);
         final Long existingId = null;
         when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
@@ -123,7 +123,7 @@ public class CompanyServiceTest {
     @DisplayName("Deve retornar erro quando não encontrado empresa por documento durante a atualização")
     public void shouldReturnErrorWhenNotFoundCompanyByDocumentInRegistryUpdate() {
         final Long id = 1l;
-        final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
+        final CompanyRequest companyRequest = CompanyRequestBuilder.getInstance().getCompanyRequest();
         final Long existingId = null;
         when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.update(id, companyRequest));
@@ -133,7 +133,7 @@ public class CompanyServiceTest {
     @DisplayName("Deve retornar erro quando encontrado empresa por documento com outro id durante a atualização")
     public void shouldReturnErrorWhenFoundCompanyByDocumentWithOtherIdInRegistryUpdate() {
         final Long id = 1l;
-        final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
+        final CompanyRequest companyRequest = CompanyRequestBuilder.getInstance().getCompanyRequest();
         final Long existingId = 2l;
         when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> companyService.update(id, companyRequest));
@@ -142,13 +142,13 @@ public class CompanyServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando encontrado empresa por documento durante a atualização")
     public void shouldNotReturnErrorWhenFoundCompanyByDocumentInRegistryUpdate() {
-        final CompanyRequest companyRequest = CompanyRequestBuilder.getBasicCompanyRequest().getCompanyRequest();
+        final CompanyRequest companyRequest = CompanyRequestBuilder.getInstance().getCompanyRequest();
 
         final Long id = 1l;
         final Long existingId = id;
         when(companyRepository.findCompanyEntityByDocument(companyRequest.getDocument())).thenReturn(existingId);
 
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getCompanyEntityByCompanyRequest(companyRequest).getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance(companyRequest).getCompanyEntity();
         companyEntity.setId(1l);
         final Optional<CompanyEntity> optionalCompanyEntity = Optional.of(companyEntity);
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
@@ -170,7 +170,7 @@ public class CompanyServiceTest {
     @DisplayName("Não deve retornar erro quando encontrado empresa por id durante a exclusão")
     public void shouldNotReturnErrorWhenFoundCompanyByIdInRegistryDelete() {
         final Long id = 1l;
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity(id).getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance(id).getCompanyEntity();
         final Optional<CompanyEntity> optionalCompanyEntity = Optional.of(companyEntity);
         when(companyRepository.findById(id)).thenReturn(optionalCompanyEntity);
 

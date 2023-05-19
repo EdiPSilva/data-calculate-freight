@@ -17,8 +17,8 @@ public class OrdersEntityBuilder {
         final OrdersEntityBuilder builder = new OrdersEntityBuilder();
         builder.ordersEntity = OrdersEntity.builder()
                 .id(1L)
-                .companyEntity(CompanyEntityBuilder.getBasicCompanyEntity().getCompanyEntity())
-                .calculationFreightEntity(CalculationFreightEntityBuilder.getBasicCalculationFreightEntity(1L).getCalculationFreightEntity())
+                .companyEntity(CompanyEntityBuilder.getInstance().getCompanyEntity())
+                .calculationFreightEntity(CalculationFreightEntityBuilder.getInstance(1L).getCalculationFreightEntity())
                 .orderNumber("123")
                 .dateCreate(Fuctions.getCreateDate())
                 .build();

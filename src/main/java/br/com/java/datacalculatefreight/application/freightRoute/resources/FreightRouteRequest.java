@@ -1,11 +1,9 @@
 package br.com.java.datacalculatefreight.application.freightRoute.resources;
 
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.FreightRouteEntity;
-import br.com.java.datacalculatefreight.utils.GenericValidations;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.*;
 

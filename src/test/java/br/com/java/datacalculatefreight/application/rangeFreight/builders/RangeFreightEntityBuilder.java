@@ -16,15 +16,15 @@ public class RangeFreightEntityBuilder {
 
     }
 
-    public static RangeFreightEntityBuilder getBasicRangeFreightEntity() {
-        return getBasicRangeFreightEntity(1L);
+    public static RangeFreightEntityBuilder getInstance() {
+        return getInstance(1L);
     }
 
-    public static RangeFreightEntityBuilder getBasicRangeFreightEntity(final Long id) {
+    public static RangeFreightEntityBuilder getInstance(final Long id) {
         final RangeFreightEntityBuilder builder = new RangeFreightEntityBuilder();
         builder.rangeFreightEntity = RangeFreightEntity.builder()
                 .id(id)
-                .shippingCompanyEntity(ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity())
+                .shippingCompanyEntity(ShippingCompanyEntityBuilder.getInstance().getShippingCompanyEntity())
                 .startValue(1.0)
                 .endValue(1.0)
                 .freightValue(1.0)
@@ -35,7 +35,7 @@ public class RangeFreightEntityBuilder {
         return builder;
     }
 
-    public static RangeFreightEntityBuilder getBasicRangeFreightEntityByRangeFreightRequest(final RangeFreightRequest rangeFreightRequest, final ShippingCompanyEntity shippingCompanyEntity) {
+    public static RangeFreightEntityBuilder getInstance(final RangeFreightRequest rangeFreightRequest, final ShippingCompanyEntity shippingCompanyEntity) {
         final RangeFreightEntityBuilder builder = new RangeFreightEntityBuilder();
         builder.rangeFreightEntity = rangeFreightRequest.to(shippingCompanyEntity);
         builder.rangeFreightEntity.setDateCreate(LocalDateTime.now());

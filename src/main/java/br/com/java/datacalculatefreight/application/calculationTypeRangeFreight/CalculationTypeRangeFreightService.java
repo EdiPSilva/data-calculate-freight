@@ -9,7 +9,6 @@ import br.com.java.datacalculatefreight.application.freightRoute.FreightRouteSer
 import br.com.java.datacalculatefreight.application.freightRoute.persistence.FreightRouteEntity;
 import br.com.java.datacalculatefreight.application.rangeFreight.RangeFreightService;
 import br.com.java.datacalculatefreight.application.rangeFreight.persistence.RangeFreightEntity;
-import br.com.java.datacalculatefreight.application.rangeFreight.resources.RangeFreightResponse;
 import br.com.java.datacalculatefreight.application.typeDelivery.TypeDeliveryService;
 import br.com.java.datacalculatefreight.application.typeDelivery.persistence.TypeDeliveryEntity;
 import br.com.java.datacalculatefreight.configuration.MessageCodeEnum;

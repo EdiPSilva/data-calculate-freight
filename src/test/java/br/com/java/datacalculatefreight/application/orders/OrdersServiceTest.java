@@ -85,7 +85,7 @@ public class OrdersServiceTest {
     public void shouldReturnErrorWhenNotLocatedByOrderNumber() {
         final String orderNumber = "123";
         final Long companyId = 1L;
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity().getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance().getCompanyEntity();
         when(companyService.getCompanyEntityById(companyId)).thenReturn(companyEntity);
         final OrdersEntity ordersEntity = null;
         when(ordersRepository.findOrdersByNumberAndCompany(orderNumber, companyService.getCompanyEntityById(companyId).getId())).thenReturn(ordersEntity);
@@ -97,7 +97,7 @@ public class OrdersServiceTest {
     public void shouldNotReturnErrorWhenLocatedByOrderNumber() {
         final String orderNumber = "123";
         final Long companyId = 1L;
-        final CompanyEntity companyEntity = CompanyEntityBuilder.getBasicCompanyEntity().getCompanyEntity();
+        final CompanyEntity companyEntity = CompanyEntityBuilder.getInstance().getCompanyEntity();
         when(companyService.getCompanyEntityById(companyId)).thenReturn(companyEntity);
         final OrdersEntity ordersEntity = OrdersEntityBuilder.getInstance().getOrdersEntity();
         when(ordersRepository.findOrdersByNumberAndCompany(orderNumber, companyService.getCompanyEntityById(companyId).getId())).thenReturn(ordersEntity);

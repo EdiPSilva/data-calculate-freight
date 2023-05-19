@@ -10,7 +10,7 @@ public class ShippingCompanyRequestBuilder {
 
     }
 
-    public static ShippingCompanyRequestBuilder getBasicShippingCompanyRequest() {
+    public static ShippingCompanyRequestBuilder getInstance() {
         final ShippingCompanyRequestBuilder builder = new ShippingCompanyRequestBuilder();
         builder.shippingCompanyRequest = ShippingCompanyRequest.builder()
                 .name("JP Log ME")

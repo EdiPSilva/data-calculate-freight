@@ -10,7 +10,7 @@ public class TypeDeliveryRequestBuilder {
 
     }
 
-    public static TypeDeliveryRequestBuilder getBasicTypeDeliveryRequest() {
+    public static TypeDeliveryRequestBuilder getInstance() {
         final TypeDeliveryRequestBuilder builder = new TypeDeliveryRequestBuilder();
         builder.typeDeliveryRequest = TypeDeliveryRequest.builder()
                 .type("EXPRESS")

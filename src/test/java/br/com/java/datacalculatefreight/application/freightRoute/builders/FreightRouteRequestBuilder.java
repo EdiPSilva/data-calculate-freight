@@ -10,11 +10,9 @@ public class FreightRouteRequestBuilder {
 
     }
 
-    public static FreightRouteRequestBuilder getBasicFreightRouteRequest() {
-        return getBasicFreightRouteRequest(false);
-    }
+    public static FreightRouteRequestBuilder getInstance() { return getInstance(false); }
 
-    public static FreightRouteRequestBuilder getBasicFreightRouteRequest(final boolean equals) {
+    public static FreightRouteRequestBuilder getInstance(final boolean equals) {
         final String startPostalCode = "14000000";
         final String endPostalCode = equals ? startPostalCode : "14000020";
         final FreightRouteRequestBuilder builder = new FreightRouteRequestBuilder();

@@ -13,7 +13,7 @@ public class CalculationFreightEntityBuilder {
 
     }
 
-    public static CalculationFreightEntityBuilder getBasicCalculationFreightEntity(final Long id) {
+    public static CalculationFreightEntityBuilder getInstance(final Long id) {
         final CalculationFreightEntityBuilder builder = new CalculationFreightEntityBuilder();
         builder.calculationFreightEntity = CalculationFreightEntity.builder()
                 .id(id)

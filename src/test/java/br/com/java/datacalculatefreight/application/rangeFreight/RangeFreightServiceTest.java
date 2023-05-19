@@ -63,7 +63,7 @@ public class RangeFreightServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErroWhenTheRegistryWasFound() {
         final Long id = 1l;
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(id).getRangeFreightEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(id).getRangeFreightEntity();
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = Optional.of(rangeFreightEntity);
         when(rangeFreightRepository.findById(id)).thenReturn(optionalRangeFreightEntity);
         compare(rangeFreightEntity, assertDoesNotThrow(() -> rangeFreightService.getById(id)));
@@ -88,7 +88,7 @@ public class RangeFreightServiceTest {
     @DisplayName("Deve retornar erro quando o valor inicial for maior que o valor final")
     public void shouldReturnErrorWhenStartValueGreaterEndValue() {
         final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance(2.0, 1.0).getRangeFreightRequest();
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance().getShippingCompanyEntity();
         when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);
         assertThrows(CustomException.class, () -> rangeFreightService.create(rangeFreightRequest));
     }
@@ -97,8 +97,8 @@ public class RangeFreightServiceTest {
     @DisplayName("Não deve retornar erro quando a transportadora for encontrada")
     public void shouldNotReturnErrorWhenShippingCompanyWasFound() {
         final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance().getRangeFreightRequest();
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntityByRangeFreightRequest(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance().getShippingCompanyEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
         when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);
         when(rangeFreightRepository.save(Mockito.any())).thenReturn(rangeFreightEntity);
         compare(rangeFreightRequest, assertDoesNotThrow(() -> rangeFreightService.create(rangeFreightRequest)));
@@ -122,8 +122,8 @@ public class RangeFreightServiceTest {
     public void shouldNotReturnErrorWhenShippingCompanyWasFoundInRegistryUpdate() {
         final Long id = 1L;
         final RangeFreightRequest rangeFreightRequest = RangeFreightRequestBuilder.getInstance().getRangeFreightRequest();
-        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getBasicShippingCompanyEntity().getShippingCompanyEntity();
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntityByRangeFreightRequest(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
+        final ShippingCompanyEntity shippingCompanyEntity = ShippingCompanyEntityBuilder.getInstance().getShippingCompanyEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(rangeFreightRequest, shippingCompanyEntity).getRangeFreightEntity();
         when(shippingCompanyService.getShippingCompanyById(rangeFreightRequest.getShippingCompanyId())).thenReturn(shippingCompanyEntity);
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = Optional.of(rangeFreightEntity);
         when(rangeFreightRepository.findById(id)).thenReturn(optionalRangeFreightEntity);
@@ -144,7 +144,7 @@ public class RangeFreightServiceTest {
     @DisplayName("Não deve retornar erro quando encontrado transportadora por id durante a exclusão")
     public void shouldNotReturnErrorWhenFoundShippingCompanyByIdInRegistryDelete() {
         final Long id = 1l;
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(id).getRangeFreightEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(id).getRangeFreightEntity();
         final Optional<RangeFreightEntity> optionalRangeFreightEntity = Optional.of(rangeFreightEntity);
         when(rangeFreightRepository.findById(id)).thenReturn(optionalRangeFreightEntity);
 

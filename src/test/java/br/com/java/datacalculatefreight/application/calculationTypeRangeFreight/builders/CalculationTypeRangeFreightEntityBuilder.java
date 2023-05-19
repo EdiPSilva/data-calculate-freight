@@ -25,9 +25,9 @@ public class CalculationTypeRangeFreightEntityBuilder {
         builder.calculationTypeRangeFreightEntity = CalculationTypeRangeFreightEntity.builder()
                 .id(id)
                 .calculationType(CalculationTypeEnum.CUBAGE)
-                .rangeFreightEntity(RangeFreightEntityBuilder.getBasicRangeFreightEntity().getRangeFreightEntity())
-                .typeDeliveryEntity(TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity().getTypeDeliveryEntity())
-                .freightRouteEntity(FreightRouteEntityBuilder.getBasicFreightRouteEntity().getFreightRouteEntity())
+                .rangeFreightEntity(RangeFreightEntityBuilder.getInstance().getRangeFreightEntity())
+                .typeDeliveryEntity(TypeDeliveryEntityBuilder.getInstance().getTypeDeliveryEntity())
+                .freightRouteEntity(FreightRouteEntityBuilder.getInstance().getFreightRouteEntity())
                 .dateCreate(Fuctions.getCreateDate())
                 .build();
         return builder;
@@ -39,9 +39,9 @@ public class CalculationTypeRangeFreightEntityBuilder {
         builder.calculationTypeRangeFreightEntity = CalculationTypeRangeFreightEntity.builder()
                 .id(1L)
                 .calculationType(getCalculationTypeEnum(calculationTypeRangeFreightRequest.getCalculationType()))
-                .rangeFreightEntity(RangeFreightEntityBuilder.getBasicRangeFreightEntity(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity())
-                .typeDeliveryEntity(TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity())
-                .freightRouteEntity(FreightRouteEntityBuilder.getBasicFreightRouteEntity(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity())
+                .rangeFreightEntity(RangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity())
+                .typeDeliveryEntity(TypeDeliveryEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity())
+                .freightRouteEntity(FreightRouteEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity())
                 .dateCreate(Fuctions.getCreateDate())
                 .build();
         return builder;

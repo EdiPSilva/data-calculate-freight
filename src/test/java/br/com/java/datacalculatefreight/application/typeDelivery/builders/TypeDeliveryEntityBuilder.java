@@ -14,11 +14,11 @@ public class TypeDeliveryEntityBuilder {
 
     }
 
-    public static TypeDeliveryEntityBuilder getBasicTypeDeliveryEntity() {
-        return getBasicTypeDeliveryEntity(1l);
+    public static TypeDeliveryEntityBuilder getInstance() {
+        return getInstance(1l);
     }
 
-    public static TypeDeliveryEntityBuilder getBasicTypeDeliveryEntity(final Long id) {
+    public static TypeDeliveryEntityBuilder getInstance(final Long id) {
         final TypeDeliveryEntityBuilder builder = new TypeDeliveryEntityBuilder();
         builder.typeDeliveryEntity = TypeDeliveryEntity.builder()
                 .id(id)
@@ -29,7 +29,7 @@ public class TypeDeliveryEntityBuilder {
         return builder;
     }
 
-    public static TypeDeliveryEntityBuilder getTypeDeliveryEntityByTypeDeliveryRequest(final TypeDeliveryRequest typeDeliveryRequest) {
+    public static TypeDeliveryEntityBuilder getInstance(final TypeDeliveryRequest typeDeliveryRequest) {
         final TypeDeliveryEntityBuilder builder = new TypeDeliveryEntityBuilder();
         builder.typeDeliveryEntity = typeDeliveryRequest.to();
         builder.typeDeliveryEntity.setDateCreate(LocalDateTime.now());

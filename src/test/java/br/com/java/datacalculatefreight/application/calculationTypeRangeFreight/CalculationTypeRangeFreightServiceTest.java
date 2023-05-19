@@ -94,9 +94,9 @@ public class CalculationTypeRangeFreightServiceTest {
         final CalculationTypeRangeFreightRequest calculationTypeRangeFreightRequest = CalculationTypeRangeFreightRequestBuilder.getInstance().getCalculationTypeRangeFreightRequest();
         final CalculationTypeRangeFreightEntity calculationTypeRangeFreightEntity = CalculationTypeRangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest).getCalculationTypeRangeFreightEntity();
 
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
 
         when(rangeFreightService.getRangeFreightById(calculationTypeRangeFreightRequest.getRangeFreightId())).thenReturn(rangeFreightEntity);
         when(freightRouteService.getFreightRouteById(calculationTypeRangeFreightRequest.getFreightRouteId())).thenReturn(freightRouteEntity);
@@ -115,9 +115,9 @@ public class CalculationTypeRangeFreightServiceTest {
         final CalculationTypeRangeFreightRequest calculationTypeRangeFreightRequest = CalculationTypeRangeFreightRequestBuilder.getInstance().getCalculationTypeRangeFreightRequest();
         final CalculationTypeRangeFreightEntity calculationTypeRangeFreightEntity = CalculationTypeRangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest).getCalculationTypeRangeFreightEntity();
 
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
 
         when(rangeFreightService.getRangeFreightById(calculationTypeRangeFreightRequest.getRangeFreightId())).thenReturn(rangeFreightEntity);
         when(freightRouteService.getFreightRouteById(calculationTypeRangeFreightRequest.getFreightRouteId())).thenReturn(freightRouteEntity);
@@ -137,9 +137,9 @@ public class CalculationTypeRangeFreightServiceTest {
         final CalculationTypeRangeFreightRequest calculationTypeRangeFreightRequest = CalculationTypeRangeFreightRequestBuilder.getInstance().getCalculationTypeRangeFreightRequest();
         final CalculationTypeRangeFreightEntity calculationTypeRangeFreightEntity = CalculationTypeRangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest).getCalculationTypeRangeFreightEntity();
 
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
 
         when(rangeFreightService.getRangeFreightById(calculationTypeRangeFreightRequest.getRangeFreightId())).thenReturn(rangeFreightEntity);
         when(freightRouteService.getFreightRouteById(calculationTypeRangeFreightRequest.getFreightRouteId())).thenReturn(freightRouteEntity);
@@ -161,9 +161,9 @@ public class CalculationTypeRangeFreightServiceTest {
         final Optional<CalculationTypeRangeFreightEntity> optionalCalculationTypeRangeFreightEntity = Optional.of(calculationTypeRangeFreightEntity);
         when(calculationTypeRangeFreightRepository.findById(id)).thenReturn(optionalCalculationTypeRangeFreightEntity);
 
-        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getBasicRangeFreightEntity(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
+        final RangeFreightEntity rangeFreightEntity = RangeFreightEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getRangeFreightId()).getRangeFreightEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getFreightRouteId()).getFreightRouteEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(calculationTypeRangeFreightRequest.getTypeDelivery()).getTypeDeliveryEntity();
 
         when(rangeFreightService.getRangeFreightById(calculationTypeRangeFreightRequest.getRangeFreightId())).thenReturn(rangeFreightEntity);
         when(freightRouteService.getFreightRouteById(calculationTypeRangeFreightRequest.getFreightRouteId())).thenReturn(freightRouteEntity);

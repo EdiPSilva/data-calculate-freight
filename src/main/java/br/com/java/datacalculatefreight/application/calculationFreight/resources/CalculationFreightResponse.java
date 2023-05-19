@@ -1,8 +1,6 @@
 package br.com.java.datacalculatefreight.application.calculationFreight.resources;
 
 import br.com.java.datacalculatefreight.application.calculationFreight.persistence.CalculationFreightEntity;
-import br.com.java.datacalculatefreight.application.shippingCompany.persistence.ShippingCompanyEntity;
-import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;

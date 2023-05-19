@@ -56,7 +56,7 @@ public class FreightRouteServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErrorWhatTheRegistryWasFound() {
         final Long id = 1l;
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(id).getFreightRouteEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(id).getFreightRouteEntity();
         final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.of(freightRouteEntity);
         when(freightRouteRepository.findById(id)).thenReturn(optionalFreightRouteEntity);
         compare(freightRouteEntity, assertDoesNotThrow(() -> freightRouteService.getById(id)));
@@ -91,7 +91,7 @@ public class FreightRouteServiceTest {
     public void shouldNotReturnErroWhenLocateRouteByPostalCode() {
         final String startPostalCode = "14000000";
         final String endPostalCode = "14000020";
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity().getFreightRouteEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance().getFreightRouteEntity();
         when(freightRouteRepository.findByStartPostalCode(startPostalCode)).thenReturn(freightRouteEntity);
         when(freightRouteRepository.findByEndPostalCode(endPostalCode)).thenReturn(freightRouteEntity);
         compare(freightRouteEntity, freightRouteService.getByPostalCode(startPostalCode, "start"));
@@ -101,7 +101,7 @@ public class FreightRouteServiceTest {
     @Test
     @DisplayName("Deve retornar erro quando CEP já existir")
     public void shouldReturnErrorWhenPostalCodeAlreadyExists() {
-        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getInstance().getFreightRouteRequest();
         final Long existingId = 1l;
         when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
         when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(existingId);
@@ -113,15 +113,15 @@ public class FreightRouteServiceTest {
     @DisplayName("Deve retornar erro quando CEP inicial e final for igual")
     public void shouldReturnErrorWhenStartAndEndPostalCodeAreEquals() {
         final boolean equals = true;
-        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest(equals).getFreightRouteRequest();
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getInstance(equals).getFreightRouteRequest();
         assertThrows(CustomException.class, () -> freightRouteService.create(freightRouteRequest), "Os CEPs inicial e final não podem ser iguais");
     }
 
     @Test
     @DisplayName("Não deve retornar erro quando os CEPs não existirem")
     public void shouldNotReturnErrorWhenThePostalCodesNotExists() {
-        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntityByFreightRouteRequest(freightRouteRequest).getFreightRouteEntity();
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getInstance().getFreightRouteRequest();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(freightRouteRequest).getFreightRouteEntity();
         freightRouteEntity.setId(1L);
         final Long existingId = null;
         when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
@@ -146,7 +146,7 @@ public class FreightRouteServiceTest {
     public void shouldReturnErrorWhenThePostalCodeIsLinckedToAnotherFreightRoute() {
         final Long id = 1L;
         final Long existingId = 2L;
-        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getInstance().getFreightRouteRequest();
 
         when(freightRouteRepository.findFreightRouteEntityByStartPostalCode(Mockito.anyString())).thenReturn(existingId);
         when(freightRouteRepository.findFreightRouteEntityByEndPostalCode(Mockito.anyString())).thenReturn(null);
@@ -162,8 +162,8 @@ public class FreightRouteServiceTest {
     public void shouldNotReturnErrorWhenThePostalCodesWasValid() {
         final Long id = 1L;
         final Long existingId = 1L;
-        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getBasicFreightRouteRequest().getFreightRouteRequest();
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntityByFreightRouteRequest(freightRouteRequest).getFreightRouteEntity();
+        final FreightRouteRequest freightRouteRequest = FreightRouteRequestBuilder.getInstance().getFreightRouteRequest();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(freightRouteRequest).getFreightRouteEntity();
         freightRouteEntity.setId(id);
         final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.of(freightRouteEntity);
 
@@ -200,7 +200,7 @@ public class FreightRouteServiceTest {
     @DisplayName("Não deve retornar erro quando encontrado rota de frete por id durante a exclusão")
     public void shouldNotReturnErrorWhenFoundFreightRouteByIdInRegistryDelete() {
         final Long id = 1L;
-        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getBasicFreightRouteEntity(id).getFreightRouteEntity();
+        final FreightRouteEntity freightRouteEntity = FreightRouteEntityBuilder.getInstance(id).getFreightRouteEntity();
         final Optional<FreightRouteEntity> optionalFreightRouteEntity = Optional.of(freightRouteEntity);
         when(freightRouteRepository.findById(id)).thenReturn(optionalFreightRouteEntity);
 

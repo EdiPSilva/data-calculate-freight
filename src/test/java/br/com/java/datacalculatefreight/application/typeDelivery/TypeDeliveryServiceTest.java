@@ -53,7 +53,7 @@ public class TypeDeliveryServiceTest {
     @DisplayName("Não deve retornar erro quando o registro for encontrado")
     public void shouldNotReturnErrorWhatTheRegistryWasFound() {
         final Long id = 1l;
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(id).getTypeDeliveryEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(id).getTypeDeliveryEntity();
         final Optional<TypeDeliveryEntity> optionalTypeDeliveryEntity = Optional.of(typeDeliveryEntity);
         when(typeDeliveryRepository.findById(id)).thenReturn(optionalTypeDeliveryEntity);
         compare(typeDeliveryEntity, assertDoesNotThrow(() -> typeDeliveryService.getById(id)));
@@ -81,7 +81,7 @@ public class TypeDeliveryServiceTest {
     @DisplayName("Não deve retornar erro quando localizado tipo entrega por tipo")
     public void shouldNotReturnErrorWhenLocatedTypeDeliveryByType() {
         final String type = "EXPRESS";
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity().getTypeDeliveryEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance().getTypeDeliveryEntity();
         when(typeDeliveryRepository.findByType(type)).thenReturn(typeDeliveryEntity);
         compare(typeDeliveryEntity, assertDoesNotThrow(() -> typeDeliveryService.getByType(type)));
     }
@@ -89,7 +89,7 @@ public class TypeDeliveryServiceTest {
     @Test
     @DisplayName("Deve retornar erro quando tipo já existir")
     public void shouldReturnErrorWhenTypeAlreadyExists() {
-        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getBasicTypeDeliveryRequest().getTypeDeliveryRequest();
+        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getInstance().getTypeDeliveryRequest();
         final Long existingId = 1l;
         when(typeDeliveryRepository.findTypeDeliveryEntityByType(typeDeliveryRequest.getType())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> typeDeliveryService.create(typeDeliveryRequest));
@@ -98,8 +98,8 @@ public class TypeDeliveryServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando tipo não existir")
     public void shouldNotReturnErrorWhenTypeNotExists() {
-        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getBasicTypeDeliveryRequest().getTypeDeliveryRequest();
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getTypeDeliveryEntityByTypeDeliveryRequest(typeDeliveryRequest).getTypeDeliveryEntity();
+        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getInstance().getTypeDeliveryRequest();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(typeDeliveryRequest).getTypeDeliveryEntity();
         typeDeliveryEntity.setId(1l);
         final Long existingId = null;
         when(typeDeliveryRepository.findTypeDeliveryEntityByType(typeDeliveryRequest.getType())).thenReturn(existingId);
@@ -120,7 +120,7 @@ public class TypeDeliveryServiceTest {
     @DisplayName("Deve retornar erro quando não encontrado tipo entrega por tipo durante a atualização")
     public void shouldReturnErrorWhenNotFoundTypeDeliveryByTypeInRegistryUpdate() {
         final Long id = 1l;
-        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getBasicTypeDeliveryRequest().getTypeDeliveryRequest();
+        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getInstance().getTypeDeliveryRequest();
         final Long existingId = null;
         when(typeDeliveryRepository.findTypeDeliveryEntityByType(typeDeliveryRequest.getType())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> typeDeliveryService.update(id, typeDeliveryRequest));
@@ -130,7 +130,7 @@ public class TypeDeliveryServiceTest {
     @DisplayName("Deve retornar erro quando encontrado tipo entrega por tipo com outro id durante a atualização")
     public void shouldReturnErrorWhenFoundTypeDeliveryByTypeWithOtherIdInRegistryUpdate() {
         final Long id = 1l;
-        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getBasicTypeDeliveryRequest().getTypeDeliveryRequest();
+        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getInstance().getTypeDeliveryRequest();
         final Long existingId = 2l;
         when(typeDeliveryRepository.findTypeDeliveryEntityByType(typeDeliveryRequest.getType())).thenReturn(existingId);
         assertThrows(CustomException.class, () -> typeDeliveryService.update(id, typeDeliveryRequest));
@@ -139,13 +139,13 @@ public class TypeDeliveryServiceTest {
     @Test
     @DisplayName("Não deve retornar erro quando encontrado tipo entrega por tipo durante a atualização")
     public void shouldNotReturnErrorWhenFoundTypeDeliveryByTypeInRegistryUpdate() {
-        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getBasicTypeDeliveryRequest().getTypeDeliveryRequest();
+        final TypeDeliveryRequest typeDeliveryRequest = TypeDeliveryRequestBuilder.getInstance().getTypeDeliveryRequest();
 
         final Long id = 1l;
         final Long existingId = id;
         when(typeDeliveryRepository.findTypeDeliveryEntityByType(typeDeliveryRequest.getType())).thenReturn(existingId);
 
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getTypeDeliveryEntityByTypeDeliveryRequest(typeDeliveryRequest).getTypeDeliveryEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(typeDeliveryRequest).getTypeDeliveryEntity();
         typeDeliveryEntity.setId(1l);
         final Optional<TypeDeliveryEntity> optionalTypeDeliveryEntity = Optional.of(typeDeliveryEntity);
         when(typeDeliveryRepository.findById(id)).thenReturn(optionalTypeDeliveryEntity);
@@ -167,7 +167,7 @@ public class TypeDeliveryServiceTest {
     @DisplayName("Não deve retornar erro quando encontrado empresa por id durante a exclusão")
     public void shouldNotReturnErrorWhenFoundCompanyByIdInRegistryDelete() {
         final Long id = 1l;
-        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getBasicTypeDeliveryEntity(id).getTypeDeliveryEntity();
+        final TypeDeliveryEntity typeDeliveryEntity = TypeDeliveryEntityBuilder.getInstance(id).getTypeDeliveryEntity();
         final Optional<TypeDeliveryEntity> optionalTypeDeliveryEntity = Optional.of(typeDeliveryEntity);
         when(typeDeliveryRepository.findById(id)).thenReturn(optionalTypeDeliveryEntity);
 

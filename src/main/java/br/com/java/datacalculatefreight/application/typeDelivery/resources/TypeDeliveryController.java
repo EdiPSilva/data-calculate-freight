@@ -1,7 +1,5 @@
 package br.com.java.datacalculatefreight.application.typeDelivery.resources;
 
-import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyRequest;
-import br.com.java.datacalculatefreight.application.shippingCompany.resources.ShippingCompanyResponse;
 import br.com.java.datacalculatefreight.application.typeDelivery.TypeDeliveryService;
 import br.com.java.datacalculatefreight.utils.DefaultLog;
 import br.com.java.datacalculatefreight.utils.DefaultResponse;
