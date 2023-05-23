@@ -1,7 +1,8 @@
 package br.com.java.datacalculatefreight.utils;
 
 public enum StatusMessageEnum {
-    SUCCESS("Sucesso");
+    SUCCESS("Sucesso"),
+    OK("Ok");
 
     private String value;
 

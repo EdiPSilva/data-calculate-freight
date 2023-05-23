@@ -26,7 +26,7 @@ public class CalculationTypeRangeFreightController {
 
     private static final String API_V1 = "/calculation-type-range-freight/v1/";
 
-    @ApiOperation("Rota frete por Id")
+    @ApiOperation("Tipo de cálculo renge frete por Id")
     @GetMapping(value = "/v1/{id}")
     public ResponseEntity<CalculationTypeRangeFreightResponse> getById(@Valid @PathVariable("id") Long id) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.GET, API_V1);
@@ -34,7 +34,7 @@ public class CalculationTypeRangeFreightController {
         return ResponseEntity.ok(calculationTypeRangeFreightResponse);
     }
 
-    @ApiOperation("Rota frete listagem")
+    @ApiOperation("Tipo de cálculo renge frete listagem")
     @GetMapping(value = "/v1/")
     public ResponseEntity<Page<CalculationTypeRangeFreightResponse>> getAll(@RequestParam(required = false) Integer page,
                                                              @RequestParam(required = false) Integer size,
@@ -43,7 +43,7 @@ public class CalculationTypeRangeFreightController {
         return new ResponseEntity<>(calculationTypeRangeFreightService.getAll(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 
-    @ApiOperation("Cadastro rota frete")
+    @ApiOperation("Cadastro Tipo de cálculo renge frete")
     @PostMapping(value = "/v1/")
     public ResponseEntity<CalculationTypeRangeFreightResponse> create(@Valid @RequestBody CalculationTypeRangeFreightRequest calculationTypeRangeFreightRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.POST, API_V1);
@@ -51,7 +51,7 @@ public class CalculationTypeRangeFreightController {
         return new ResponseEntity<>(calculationTypeRangeFreightResponse, HttpStatus.CREATED);
     }
 
-    @ApiOperation("Atualiza rota frete")
+    @ApiOperation("Atualiza Tipo de cálculo renge frete")
     @PutMapping(value = "/v1/{id}")
     public ResponseEntity<CalculationTypeRangeFreightResponse> update(@Valid @PathVariable("id") Long id, @Valid @RequestBody CalculationTypeRangeFreightRequest calculationTypeRangeFreightRequest) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.PUT, API_V1);
@@ -59,7 +59,7 @@ public class CalculationTypeRangeFreightController {
         return new ResponseEntity<>(calculationTypeRangeFreightResponse, HttpStatus.CREATED);
     }
 
-    @ApiOperation("Remove rota frete")
+    @ApiOperation("Remove Tipo de cálculo renge frete")
     @DeleteMapping(value = "/v1/{id}")
     public ResponseEntity<DefaultResponse> delete(@Valid @PathVariable("id") Long id) {
         defaultLog.printLogExecutedEndpoint(HttpMethod.DELETE, API_V1);
